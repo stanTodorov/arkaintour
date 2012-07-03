@@ -1,0 +1,70 @@
+<h2>Редактиране на страница</h2>
+
+<form method="post" action="{$URL}admin/?page={$PAGE}&amp;action=edit&amp;id={$ID}">
+	<table class="layout" style="width: 700px">
+		<tr>
+			<th>Език</th>
+			<td>
+				<select name="lang" class="text">
+				{section name=i loop=$LANGS}
+					<option value="{$LANGS[i].id}" {if $RESULT.lang eq $LANGS[i].id}selected="selected"{/if}>{$LANGS[i].name|escape} ({$LANGS[i].native|escape})</option>
+				{/section}
+				</select>
+			</td>
+		</tr>
+
+		<tr>
+			<th>Заглавие</th>
+			<td>
+				<input type="text" class="text" name="title" value="{$RESULT.title|escape}" />
+				{if $ERRORS.title}<div class="small-error">{$ERRORS.title}</div>{/if}
+
+			</td>
+		</tr>
+
+		<tr>
+			<th>URL адрес <br /> <small>Ще се вземе от заглавието</small></th>
+			<td>
+				<input type="text" class="text" name="url" value="{$RESULT.url|escape}" />
+				{if $ERRORS.url}<div class="small-error">{$ERRORS.url}</div>{/if}
+
+			</td>
+		</tr>
+		<tr>
+			<th>Ключови думи (SEO)</th>
+			<td>
+				<input type="text" class="text" name="keywords" value="{$RESULT.keywords|escape}" />
+				{if $ERRORS.keywords}<div class="small-error">{$ERRORS.keywords}</div>{/if}
+			</td>
+		</tr>
+		<tr>
+			<th>Тип страница</th>
+			<td>
+				<select name="script" class="text">
+				{section name=i loop=$SCRIPTS}
+					<option value="{$SCRIPTS[i].id}" {if $SCRIPTS[i].id eq $RESULT.script}selected="selected"{/if}>{$SCRIPTS[i].name|escape}</option>
+				{/section}
+				</select>
+
+				{if $ERRORS.script}<div class="small-error">{$ERRORS.script}</div>{/if}
+			</td>
+		</tr>
+		<tr>
+			<th>Опции</th>
+			<td>
+				<label><input type="checkbox" name="show_title" value="1" {if $RESULT.show_title}checked="checked"{/if} /> Показване на заглавието </label><br />
+			</td>
+		</tr>
+	</table>
+
+	<div class="center" style="margin: 10px auto; width: 700px; font-size: 0.75em">
+		<textarea rows="15" cols="75" name="content" class="tinymce">{$RESULT.content|escape}</textarea>
+		{if $ERRORS.content}<div class="small-error">{$ERRORS.content}</div>{/if}
+	</div>
+
+	<div class="buttons">
+		<input type="hidden" name="token" value="{$TOKEN}" />
+		<span class="button"><button type="submit" name="submit">Редакция</button></span>
+	</div>
+</form>
+

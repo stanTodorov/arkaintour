@@ -1,0 +1,22 @@
+<h2>{tr}ВИП Оферти{/tr}</h2>
+
+{if $RESULT}
+<ul class="offers">
+	{section name=i loop=$RESULT}
+	<li>
+		<div class="img" {if $RESULT[i].image}style="background-image: url('{$RESULT[i].image}');"{/if}></div>
+		<div class="description">
+			<h5>{$RESULT[i].name|escape}</h5>
+			<p>{$RESULT[i].content}</p>
+			<div class="price">{$RESULT[i].price|escape}</div>
+		</div>
+		<div class="clear"></div>
+		<div class="more">
+			<a href="{$RESULT[i].url}" class="more">{tr}Към офертата{/tr}</a>
+		</div>
+	</li>
+	{/section}
+</ul>
+{else}
+	<p class="center">{tr}Няма намерени резултати!{/tr}</p>
+{/if}

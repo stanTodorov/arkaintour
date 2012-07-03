@@ -1,0 +1,55 @@
+{include file='searchbar.html'}
+
+
+{if $ACTION eq 'list'}
+<table class="list">
+
+	<tr>
+		<th style="width: 60px">№</th>
+		<th><a href="{$URL}admin/?page={$PAGE}&amp;sort=name&amp;order={$ORDER}&amp;search={$SEARCH|escape}">Име</a></th>
+		<th><a href="{$URL}admin/?page={$PAGE}&amp;sort=iso&amp;order={$ORDER}&amp;search={$SEARCH|escape}">ISO код</a></th>
+		<th style="width: 120px">Опции</th>
+	</tr>
+
+	{section name=i loop=$RESULT}
+
+	<tr {if $smarty.section.i.index is odd}class="odd"{/if} >
+		<td>{($COUNT_PER_PAGE * ($CUR_PAGE - 1) + $smarty.section.i.index + 1)}</td>
+		<td>{$RESULT[i].name}</td>
+		<td class="center">
+			{$RESULT[i].iso|upper|escape}
+			<img src="{$URL}images/country/{$RESULT[i].iso|lower|escape}.gif" alt="" />
+		</td>
+
+		<td class="center">
+			{if $RESULT[i].nodir eq 1 && $RESULT[i].position eq 1}
+				<img src="{$URL}images/blank.png" width="16" height="16" alt="" /> |
+				<a href="{$URL}admin/?page={$PAGE}&amp;action=list&amp;dir=down&amp;id={$RESULT[i].id}&amp;token={$TOKEN}" title="Премести Надолу"><img src="{$URL}images/icons/arrow_down.png" alt="" /></a> |
+
+			{else if $RESULT[i].nodir eq 1}
+				<a href="{$URL}admin/?page={$PAGE}&amp;action=list&amp;dir=up&amp;id={$RESULT[i].id}&amp;token={$TOKEN}" title="Премести нагоре"><img src="{$URL}images/icons/arrow_up.png" alt="" /></a> |
+				<img src="{$URL}images/blank.png" width="16" height="16" alt="" /> |
+			{else}
+				<a href="{$URL}admin/?page={$PAGE}&amp;action=list&amp;dir=up&amp;id={$RESULT[i].id}&amp;token={$TOKEN}" title="Премести нагоре"><img src="{$URL}images/icons/arrow_up.png" alt="" /></a> |
+				<a href="{$URL}admin/?page={$PAGE}&amp;action=list&amp;dir=down&amp;id={$RESULT[i].id}&amp;token={$TOKEN}" title="Премести Надолу"><img src="{$URL}images/icons/arrow_down.png" alt="" /></a> |
+			{/if}
+		</td>
+	</tr>
+	{sectionelse}
+	<tr>
+		<td class="center" colspan="4">Няма намерени резултати!</td>
+	</tr>
+	{/section}
+	<tr>
+		<th colspan="4">Общо: {$COUNT|default:"0"}</th>
+	</tr>
+</table>
+
+{if $PAGING}<div class="paging">{$PAGING}</div>{/if}
+
+{else if $ACTION eq 'add'}
+
+
+{else if $ACTION eq 'edit'}
+
+{/if}

@@ -1,0 +1,502 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-06-29 16:27+0300\n"
+"PO-Revision-Date: 2012-07-03 12:59+0200\n"
+"Last-Translator: Миалий <mialygk@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"X-Poedit-Language: Russian\n"
+"X-Poedit-Country: RUSSIAN FEDERATION\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: ../../offers.php:435
+#, php-format
+msgid "%s Ви изпрати оферта:"
+msgstr "%s только что отправил вам предложение:"
+
+#: ../../config/messages.php:27
+msgctxt "dateformat"
+msgid "D j M Y H:i"
+msgstr "D j M Y H:i"
+
+#: ../../config/messages.php:28
+msgctxt "dateformat"
+msgid "d F Y"
+msgstr "d F Y"
+
+#: ../../config/messages.php:29
+msgctxt "dateformat"
+msgid "d.m.Y"
+msgstr "d.m.Y"
+
+#: ../../config/messages.php:26
+msgctxt "dateformat"
+msgid "l j F Y год. H:i:s"
+msgstr "l j F Y  H:i:s"
+
+#: ../../offers.php:436
+#: ../../libraries/Application.libs.php:237
+msgid "Аркаин Тур"
+msgstr "Аркаин Тур"
+
+#: ../../offers.php:416
+msgid "Аркаин Тур: "
+msgstr "Аркаин Тур:"
+
+#: ../../contacts.php:114
+#: ../../offers.php:349
+#: ../../offers.php:504
+msgid "Благодарим Ви!"
+msgstr "Спасибо!"
+
+#: ../../config/messages.php:11
+msgid "Въведените данни съдържат грешки, които трябва да бъдат остранени!"
+msgstr "Данные, введенные содержит ошибки, которая должна быть исправлена!"
+
+#: ../../contacts.php:70
+msgid "Въведеният код е невалиден!"
+msgstr "Код Вы ввели является недопустимым!"
+
+#: ../../config/messages.php:17
+msgid "Възникна грешка при изпращане на съобщението! Моля, опитайте отново!"
+msgstr "Произошла ошибка при попытке отправить сообщение! Пожалуйста, попробуйте еще раз!"
+
+#: ../../config/messages.php:15
+msgid "Възникна грешка с изпратения файл."
+msgstr "Произошла ошибка с файлом, который вы прислали."
+
+#: ../../config/messages.php:10
+msgid "Грешен идентификатор! Моля, опитайте отново!"
+msgstr "Неправильный идентификатор! Пожалуйста, попробуйте еще раз!"
+
+#: ../../config/messages.php:6
+msgid "Грешка при връзка с базата от данни!"
+msgstr "Ошибка при попытке соединения с базой данных!"
+
+#: ../../config/messages.php:7
+msgid "Грешка при заявката към базата от данни!"
+msgstr "Ошибка базы данных запрос!"
+
+#: ../../config/messages.php:8
+msgid "Грешна парола или потребителско име!"
+msgstr "Неверный пароль или имя пользователя!"
+
+#: ../../offers.php:420
+msgid "Дати на отпътуване"
+msgstr "Дата выезда"
+
+#: ../../config/messages.php:20
+#, php-format
+msgid "Максималната дължина е %s символа!"
+msgstr "Максимальная длина %s символов!"
+
+#: ../../config/messages.php:19
+#, php-format
+msgid "Минималната дължина е %s символа!"
+msgstr "Минимальная длина составляет %s символов!"
+
+#: ../../config/messages.php:9
+msgid "Не сте въвели парола или потребителско име!"
+msgstr "Не имя пользователя или пароль, введенный!"
+
+#: ../../config/messages.php:22
+msgid "Невалидни символи!"
+msgstr "Недопустимые символы!"
+
+#: ../../config/messages.php:13
+msgid "Няма намерени резултати!"
+msgstr "Ничего не найдено!"
+
+#: ../../config/messages.php:14
+msgid "Нямате права за тази операция!"
+msgstr "У вас нет разрешения на это действие!"
+
+#: ../../offers.php:439
+msgid "Оферта:"
+msgstr "Предложение:"
+
+#: ../../offers.php:437
+msgid "Повече информация"
+msgstr "Более подробная информация"
+
+#: ../../offers.php:438
+msgid "Подробности"
+msgstr "Детали"
+
+#: ../../config/messages.php:24
+#, php-format
+msgid "Позволени символи: %s!"
+msgstr "Символы: %s!"
+
+#: ../../config/messages.php:21
+msgid "Полето е задължително!"
+msgstr "Поля обязательны для заполнения!"
+
+#: ../../config/messages.php:12
+msgid "Полето съдържа невалидна дата или час!"
+msgstr "Поле содержит неверную дату или время!"
+
+#: ../../offers.php:496
+msgid "Превключете на HTML версията на писмото!"
+msgstr "Переключиться на HTML версию этого письма!"
+
+#: ../../search.php:16
+msgid "Резултати от търсенето"
+msgstr "Результаты поиска"
+
+#: ../../search.php:24
+#, php-format
+msgid "Резултати от търсенето на „%s“"
+msgstr "Результаты поиска для «%s»"
+
+#: ../../config/messages.php:16
+msgid "Снимката е повредена или е невалиден формат."
+msgstr "Образ поврежден или он находится в неподдерживаемый формат."
+
+#: ../../config/messages.php:23
+#, php-format
+msgid "Стойността може да бъде между %s и %s!"
+msgstr "Значение может быть от %s до %s!"
+
+#: ../../libraries/Application.libs.php:285
+msgid "Страницата не е намерена!"
+msgstr "Страница не может быть найден!"
+
+#: ../../config/messages.php:53
+msgctxt "months-abbr"
+msgid "авг"
+msgstr "авг"
+
+#: ../../config/messages.php:39
+msgctxt "months"
+msgid "август"
+msgstr "август"
+
+#: ../../config/messages.php:49
+msgctxt "months-abbr"
+msgid "апр"
+msgstr "апр"
+
+#: ../../config/messages.php:35
+msgctxt "months"
+msgid "април"
+msgstr "апрель"
+
+#: ../../config/messages.php:70
+msgctxt "days-abbr"
+msgid "вт"
+msgstr "вт"
+
+#: ../../config/messages.php:61
+msgctxt "days"
+msgid "вторник"
+msgstr "вторник"
+
+#: ../../config/messages.php:57
+msgctxt "months-abbr"
+msgid "дек"
+msgstr "дек"
+
+#: ../../config/messages.php:43
+msgctxt "months"
+msgid "декември"
+msgstr "декабрь"
+
+#: ../../index.php:24
+msgid "карта-на-сайта"
+msgstr "карта-сайта"
+
+#: ../../config/messages.php:50
+msgctxt "months-abbr"
+msgid "май"
+msgstr "май"
+
+#: ../../config/messages.php:36
+msgctxt "months"
+msgid "май"
+msgstr "май"
+
+#: ../../config/messages.php:48
+msgctxt "months-abbr"
+msgid "мар"
+msgstr "мрт"
+
+#: ../../config/messages.php:34
+msgctxt "months"
+msgid "март"
+msgstr "март"
+
+#: ../../config/messages.php:75
+msgctxt "days-abbr"
+msgid "нд"
+msgstr "вс"
+
+#: ../../config/messages.php:66
+msgctxt "days"
+msgid "неделя"
+msgstr "воскресенье"
+
+#: ../../config/messages.php:56
+msgctxt "months-abbr"
+msgid "ное"
+msgstr "нбр"
+
+#: ../../config/messages.php:42
+msgctxt "months"
+msgid "ноември"
+msgstr "ноябрь"
+
+#: ../../config/messages.php:55
+msgctxt "months-abbr"
+msgid "окт"
+msgstr "окт"
+
+#: ../../config/messages.php:41
+msgctxt "months"
+msgid "октомври"
+msgstr "октябрь"
+
+#: ../../config/messages.php:64
+msgctxt "days"
+msgid "петък"
+msgstr "пятница"
+
+#: ../../config/messages.php:69
+msgctxt "days-abbr"
+msgid "пн"
+msgstr "пн"
+
+#: ../../config/messages.php:60
+msgctxt "days"
+msgid "понеделник"
+msgstr "понедельник"
+
+#: ../../config/messages.php:73
+msgctxt "days-abbr"
+msgid "пт"
+msgstr "пт"
+
+#: ../../config/messages.php:74
+msgctxt "days-abbr"
+msgid "сб"
+msgstr "сб"
+
+#: ../../config/messages.php:54
+msgctxt "months-abbr"
+msgid "сеп"
+msgstr "сен"
+
+#: ../../config/messages.php:40
+msgctxt "months"
+msgid "септември"
+msgstr "сентябрь"
+
+#: ../../config/messages.php:71
+msgctxt "days-abbr"
+msgid "ср"
+msgstr "ср"
+
+#: ../../config/messages.php:62
+msgctxt "days"
+msgid "сряда"
+msgstr "среда"
+
+#: ../../config/messages.php:65
+msgctxt "days"
+msgid "събота"
+msgstr "суббота"
+
+#: ../../index.php:23
+#: ../../search.php:10
+msgid "търсене"
+msgstr "поиск"
+
+#: ../../config/messages.php:47
+msgctxt "months-abbr"
+msgid "фев"
+msgstr "фев"
+
+#: ../../config/messages.php:33
+msgctxt "months"
+msgid "февруари"
+msgstr "февраль"
+
+#: ../../config/messages.php:63
+msgctxt "days"
+msgid "четвъртък"
+msgstr "четверг"
+
+#: ../../config/messages.php:72
+msgctxt "days-abbr"
+msgid "чт"
+msgstr "чт"
+
+#: ../../config/messages.php:38
+msgctxt "months"
+msgid "юли"
+msgstr "июль"
+
+#: ../../config/messages.php:52
+msgctxt "months-abbr"
+msgid "юли"
+msgstr "июл"
+
+#: ../../config/messages.php:37
+msgctxt "months"
+msgid "юни"
+msgstr "июнь"
+
+#: ../../config/messages.php:51
+msgctxt "months-abbr"
+msgid "юни"
+msgstr "июн"
+
+#: ../../config/messages.php:46
+msgctxt "months-abbr"
+msgid "яну"
+msgstr "янв"
+
+#: ../../config/messages.php:32
+msgctxt "months"
+msgid "януари"
+msgstr "январь"
+
+#: ../../template/client/article.html:9
+msgid "Назад"
+msgstr "Назад"
+
+#: ../../template/client/article.html:19
+#: ../../template/client/article.html:83
+#: ../../template/client/article.html:93
+msgid "Запитване за оферта"
+msgstr "Запрос предложения"
+
+#: ../../template/client/article.html:20
+#: ../../template/client/article.html:84
+#: ../../template/client/article.html:136
+msgid "Изпрати на приятел"
+msgstr "Отправить другу"
+
+#: ../../template/client/article.html:21
+#: ../../template/client/article.html:85
+msgid "Отпечатване"
+msgstr "Печать"
+
+#: ../../template/client/article.html:28
+msgid "Маршрут:"
+msgstr "Маршрут:"
+
+#: ../../template/client/article.html:33
+msgid "Продължителност:"
+msgstr "Продолжительность:"
+
+#: ../../template/client/article.html:37
+msgid "Транспорт:"
+msgstr "Транспорт:"
+
+#: ../../template/client/article.html:42
+msgid "Цена:"
+msgstr "Цена:"
+
+#: ../../template/client/article.html:48
+msgid "Дати на отпътуване:"
+msgstr "Дата отъезда:"
+
+#: ../../template/client/article.html:96
+#: ../../template/client/article.html:139
+#: ../../template/client/contacts.html:1
+msgid "Вашето име"
+msgstr "Ваше имя"
+
+#: ../../template/client/article.html:103
+#: ../../template/client/contacts.html:1
+msgid "Вашият ел. адрес"
+msgstr "Ваш адрес эл. почты"
+
+#: ../../template/client/article.html:110
+msgid "Телефон"
+msgstr "Телефон"
+
+#: ../../template/client/article.html:118
+#: ../../template/client/contacts.html:1
+msgid "Съобщение"
+msgstr "Сообщение"
+
+#: ../../template/client/article.html:127
+msgid "Изпрати запитване"
+msgstr "Отправить запрос"
+
+#: ../../template/client/article.html:146
+msgid "Вашият e-mail"
+msgstr "Ваш адрес эл. почты"
+
+#: ../../template/client/article.html:154
+msgid "E-mail на получателя"
+msgstr "Электр. почты"
+
+#: ../../template/client/article.html:163
+#: ../../template/client/contacts.html:1
+msgid "Изпрати"
+msgstr "Отправлять"
+
+#: ../../template/client/article.html:187
+#: ../../template/client/home.html:15
+#: ../../template/client/search.html:32
+msgid "Към офертата"
+msgstr "Показать предлагать"
+
+#: ../../template/client/contacts.html:1
+msgid "Вашите въпроси"
+msgstr "Ваши вопросы"
+
+#: ../../template/client/contacts.html:1
+msgid "Въведете кода"
+msgstr "Введите код"
+
+#: ../../template/client/home.html:1
+msgid "ВИП Оферти"
+msgstr "VIP предложения"
+
+#: ../../template/client/index.html:27
+msgid "Начало"
+msgstr "Главная страница"
+
+#: ../../template/client/index.html:92
+msgid "Категории"
+msgstr "Категории"
+
+#: ../../template/client/index.html:177
+#: ../../template/client/sitemap.html:1
+msgid "Карта на сайта"
+msgstr "Карта сайта"
+
+#: ../../template/client/notfound.html:1
+msgid "Грешка 404"
+msgstr "Ошибка 404"
+
+#: ../../template/client/notfound.html:3
+msgid "Избраната страница не е намерена!"
+msgstr "Страница, которую вы ищете, не может быть найден!"
+
+#: ../../template/client/search.html:5
+msgid "Намерени страници"
+msgstr "Найденные страницы"
+
+#: ../../template/client/search.html:19
+msgid "Намерени оферти"
+msgstr "Предложения найден"
+
+#: ../../template/client/sitemap.html:23
+msgid "Езици"
+msgstr "Языки"
+

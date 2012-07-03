@@ -1,0 +1,3 @@
+AddType application/x-font-ttf ttf
+AddType application/vnd.ms-fontobject eot
+AddOutputFilterByType DEFLATE application/x-font-ttf application/vnd.ms-fontobject image/svg+xml application/x-font-otf

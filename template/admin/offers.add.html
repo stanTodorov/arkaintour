@@ -1,0 +1,116 @@
+<h2>Добавяне на оферта</h2>
+
+<form method="post" enctype="multipart/form-data" action="{$URL}admin/?page={$PAGE}&amp;action=add">
+	<table class="layout" style="width: 700px">
+		<tr>
+			<th>Език</th>
+			<td>
+				<select name="lang" class="text" id="onChangeLanguage" data-which="offers">
+				{section name=i loop=$LANGS}
+					<option value="{$LANGS[i].id}" {if $RESULT.lang eq $LANGS[i].id}selected="selected"{/if}>{$LANGS[i].name} ({$LANGS[i].native})</option>
+				{/section}
+				</select>
+			</td>
+		</tr>
+
+		<tr>
+			<th>Категорията</th>
+			<td>
+				<select name="category" class="text" id="pages">
+				{section name=i loop=$CATEGORIES}
+					<optgroup label="{$CATEGORIES[i].title|escape}">
+					{section name=j loop=$CATEGORIES[i].list}
+						<option value="{$CATEGORIES[i].list[j].id}" {if $RESULT.category eq $CATEGORIES[i].list[j].id}selected="selected"{/if}>{$CATEGORIES[i].list[j].title}</option>
+					{/section}
+					</optgroup>
+				{/section}
+				</select>
+
+				{if $ERRORS.category}<div class="small-error">{$ERRORS.category}</div>{/if}
+			</td>
+		</tr>
+
+		<tr>
+			<th>Заглавие</th>
+			<td>
+				<input type="text" class="text" name="name" value="{$RESULT.name|escape}" />
+				{if $ERRORS.name}<div class="small-error">{$ERRORS.name}</div>{/if}
+			</td>
+		</tr>
+
+		<tr>
+			<th>Маршрут</th>
+			<td>
+				<input type="text" class="text" name="route" value="{$RESULT.route|escape}" />
+				{if $ERRORS.route}<div class="small-error">{$ERRORS.route}</div>{/if}
+			</td>
+		</tr>
+
+		<tr>
+			<th>Транспорт</th>
+			<td>
+				<input type="text" class="text" name="transport" value="{$RESULT.transport|escape}" />
+				{if $ERRORS.transport}<div class="small-error">{$ERRORS.transport}</div>{/if}
+			</td>
+		</tr>
+
+		<tr>
+			<th>Цена</th>
+			<td>
+				<input type="text" class="text" name="price" value="{$RESULT.price|escape}" />
+				{if $ERRORS.price}<div class="small-error">{$ERRORS.price}</div>{/if}
+			</td>
+		</tr>
+
+		<tr>
+			<th>Продължителност</th>
+			<td>
+				<input type="text" class="text" name="duration" value="{$RESULT.duration|escape}" />
+				{if $ERRORS.duration}<div class="small-error">{$ERRORS.duration}</div>{/if}
+			</td>
+		</tr>
+		<tr>
+			<th class="top">Дати на отпътуване (<a id="addDateRange" class="icon" href="#" title="Добавяне на нов диапазон"><span class="add no-text"></span></a>)</th>
+			<td>
+			{foreach from=$RESULT.date item=date}
+				<div class="dateRange">
+					<input type="text" class="datepicker" name="date[]" value="{$date}" />
+					<a href="#" class="icon removeDateRange"><span class="remove"></span></a>
+				</div>
+			{foreachelse}
+				<div class="dateRange">
+					<input type="text" class="datepicker" name="date[]" value="" />
+				</div>
+			{/foreach}
+				{if $ERRORS.dates}<div class="small-error">{$ERRORS.dates}</div>{/if}
+			</td>
+		</tr>
+
+		<tr>
+			<th class="top">Снимки (<a id="addImage" class="icon" href="#" title="Добавяне на ново поле"><span class="add no-text"></span></a>)</th>
+			<td>
+				<div class="filesList">
+					<input type="file" name="pictures[]" />
+				</div>
+				{if $ERRORS.pictures}<div class="small-error">{$ERRORS.pictures}</div>{/if}
+			</td>
+		</tr>
+
+
+		<tr>
+			<th>Опции</th>
+			<td>
+				<label><input type="checkbox" name="vip_offer" value="1" {if $RESULT.vip_offer}checked="checked"{/if} /> VIP оферта</label><br />
+			</td>
+		</tr>
+	</table>
+
+	<div class="center" style="margin: 10px auto; width: 700px; font-size: 0.75em">
+		<textarea rows="15" cols="75" name="content" class="tinymce">{$RESULT.content|escape}</textarea>
+		{if $ERRORS.content}<div class="small-error">{$ERRORS.content}</div>{/if}
+	</div>
+
+	<div class="buttons">
+		<span class="button"><button type="submit" name="submit">Добавяне</button></span>
+	</div>
+</form>

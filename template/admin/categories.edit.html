@@ -1,0 +1,40 @@
+<h2>Редактиране на категория</h2>
+
+<form method="post" enctype="multipart/form-data" action="{$URL}admin/?page={$PAGE}&amp;action=edit&amp;id={$ID}">
+	<table class="layout" style="width: 500px">
+		<tr>
+			<th>Език</th>
+			<td>
+				<select name="lang" class="text" id="onChangeLanguage" data-which="categories">
+				{section name=i loop=$LANGS}
+					<option value="{$LANGS[i].id}" {if $RESULT.lang eq $LANGS[i].id}selected="selected"{/if}>{$LANGS[i].name} ({$LANGS[i].native})</option>
+				{/section}
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th>Страница</th>
+			<td>
+				<select name="page" class="text" id="pages">
+				{section name=i loop=$PAGES}
+					<option value="{$PAGES[i].id}" {if $RESULT.page eq $PAGES[i].id}selected="selected"{/if}>{$PAGES[i].name}</option>
+				{/section}
+				</select>
+
+				{if $ERRORS.page}<div class="small-error">{$ERRORS.page}</div>{/if}
+			</td>
+		</tr>
+		<tr>
+			<th>Категория</th>
+			<td>
+				<input type="text" class="text" name="name" value="{$RESULT.name|escape}" />
+				{if $ERRORS.name}<div class="small-error">{$ERRORS.name}</div>{/if}
+			</td>
+		</tr>
+	</table>
+
+	<div class="buttons">
+		<span class="button"><button type="submit" name="submit">Редакция</button></span>
+	</div>
+
+</form>

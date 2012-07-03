@@ -1,0 +1,76 @@
+<div class="searchbar">
+	<div class="filter">
+		<div class="search">
+			<form method="get" action="{$URL}admin/" >
+				<input type="hidden" name="page" value="{$PAGE}" />
+				<input type="text" value="{$SEARCH|escape}" class="text" name="search" /><span class="search-button"><input type="submit" value="&nbsp;" class="submit" name="търсене" /></span>
+			</form>
+		</div>
+		<div class="operations">
+			<div class="lang">
+				<form method="post" action="{$URL}admin/?page={$PAGE}">
+					<label>Език:</label>
+					<select name="lang" class="text" onchange="this.form.submit()">
+						{section name=i loop=$LANGS}
+						<option value="{$LANGS[i].id}" {if $LANGS[i].selected}selected="selected"{/if}>{$LANGS[i].name|escape}</option>
+						{/section}
+					</select>
+				</form>
+			</div>
+			<a class="button" href="{$URL}admin/?page={$PAGE}&amp;action=sort">Подреждане</a>
+			<a class="button" href="{$URL}admin/?page={$PAGE}&amp;action=add">Нова страница</a>
+		</div>
+	</div>
+
+	{if $ORDERS}
+	<div class="orders">
+		<ul>
+		{foreach from=$ORDERS key=k item=i name="orders"}
+			<li>
+			{if $i.order|lower eq "asc"}
+				<a class="icon" title="Низходящо сортиране" href="{$URL}admin/?page={$PAGE}&amp;sort={$i.key}&amp;order=desc&amp;search={$SEARCH|escape}"><span class="down"></span>{$i.name}</a>
+			{else}
+				<a class="icon" title="Възходящо сортиране" href="{$URL}admin/?page={$PAGE}&amp;sort={$i.key}&amp;order=asc&amp;search={$SEARCH|escape}"><span class="up"></span>{$i.name}</a>
+			{/if}
+				<a class="icon remove" title="Премахване" href="{$URL}admin/?page={$PAGE}&amp;sort={$i.key}&amp;delorder=&amp;search={$SEARCH|escape}"><span class="empty remove"></span></a>
+			</li>
+		{/foreach}
+		</ul>
+	</div>
+	{/if}
+</div>
+
+<table class="list">
+	<tr>
+		<th style="width: 60px">№</th>
+		<th><a title="Сортиране по име на категория" href="{$URL}admin?page={$PAGE}&amp;sort=name&amp;order={$ORDER|default:'asc'}&amp;search={$SEARCH|escape}">Заглавие</a></th>
+		<th><a title="Сортиране по име на категория" href="{$URL}admin?page={$PAGE}&amp;sort=url&amp;order={$ORDER|default:'asc'}&amp;search={$SEARCH|escape}">URL адрес</a></th>
+		<th><a title="Сортиране по име на категория" href="{$URL}admin?page={$PAGE}&amp;sort=type&amp;order={$ORDER|default:'asc'}&amp;search={$SEARCH|escape}">Тип</a></th>
+		<th style="width: 120px">Опции</th>
+	</tr>
+
+	{section name=i loop=$RESULT}
+
+	<tr {if $smarty.section.i.index is odd}class="odd"{/if} >
+		<td>&nbsp;{$RESULT[i].nr}</td>
+		<td>{$RESULT[i].title}</td>
+		<td>{$RESULT[i].url}</td>
+		<td>{$RESULT[i].type}</td>
+
+		<td class="center">
+			<a class="icon" href="{$URL}admin/?page={$PAGE}&amp;action=edit&amp;id={$RESULT[i].id}" title="Редактиране"><span class="edit"></span></a>
+			|
+			<a class="icon" href="{$URL}admin/?page={$PAGE}&amp;action=delete&amp;id={$RESULT[i].id}" title="Изтриване" data-warning="true"><span class="delete"></span></a>
+		</td>
+	</tr>
+	{sectionelse}
+	<tr>
+		<td class="center" colspan="5">Няма намерени резултати!</td>
+	</tr>
+	{/section}
+	<tr>
+		<th colspan="5">Общо: {$COUNT|default:"0"}</th>
+	</tr>
+</table>
+
+{if $PAGING}<div class="pagination">{$PAGING}</div>{/if}

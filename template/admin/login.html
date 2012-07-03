@@ -1,0 +1,29 @@
+<div id="login-center">
+	<div id="login">
+		<form method="post" action="{$URL}admin/">
+		<table class="layout">
+			<caption>Вход в админ панела</caption>
+			{if $ERROR}
+			<tr>
+				<td colspan="2">
+					<div class="error">{$ERROR}</div>
+				</td>
+			</tr>
+			{/if}
+			<tr>
+				<th>Потребителско име</th>
+				<td><input type="text" class="text" name="username" id="username" value="" /></td>
+			</tr>
+			<tr>
+				<th>Парола</th>
+				<td><input type="password" class="text" name="password" id="password" value="" /></td>
+			</tr>
+		</table>
+
+		<div class="buttons">
+			<input type="hidden" name="token" value="{$TOKEN}" />
+			<input type="submit" class="submit" name="login" value="Вход" />
+			<button type="button" id="goback">Изход</button>
+		</div>
+	</div>
+</div>

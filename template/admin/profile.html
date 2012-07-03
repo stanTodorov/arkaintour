@@ -1,0 +1,40 @@
+<h2>Смяна на потребителската парола</h2>
+
+<form method="post" action="{$URL}admin/?page={$PAGE}&amp;token={$TOKEN}" >
+	<table class="layout" style="width: 500px">
+		<tr>
+			<th>Име</th>
+			<td>{$RESULT.name}</td>
+		</tr>
+
+		<tr>
+			<th>Потребителско име</th>
+			<td>{$RESULT.username}</td>
+		</tr>
+		<tr>
+			<th>Парола</th>
+			<td>
+				<input type="password" class="text" name="password" value="" />
+				{if $ERRORS.password}<div class="small-error">{$ERRORS.password}</div>{/if}
+			</td>
+		</tr>
+		<tr>
+			<th>Парола (отново)</th>
+			<td>
+				<input type="password" class="text" name="password2" value=""  />
+				{if $ERRORS.password2}<div class="small-error">{$ERRORS.password2}</div>{/if}
+			</td>
+		</tr>
+		<tr>
+			<th>Текуща парола</th>
+			<td>
+				<input type="password" class="text" name="oldpassword" value=""  />
+				{if $ERRORS.oldpassword}<div class="small-error">{$ERRORS.oldpassword}</div>{/if}
+			</td>
+		</tr>
+	</table>
+	<div class="buttons">
+		<input type="hidden" name="token" value="{$TOKEN}" />
+		<span class="button"><button type="submit" name="submit">Редакция</button></span>
+	</div>
+</form>

@@ -1,0 +1,58 @@
+Translation procedure:
+
+
+1. Extract all strings from source files
+-----------------------------------------
+
+Run translation.sh script via
+
+  $ bash translation.sh
+
+or
+  $ ./translation.sh
+
+GNU Gettext toolset is required!
+
+On Windows OS you need UNIX environment (bash, grep, find, etc.) and PoEdit
+tools.
+
+
+2. Translate found strings
+---------------------------
+
+Get PoEdit, gTranslator or something that edit .po file, and translate all
+found strings.
+
+Please add correct plural form for translated language!
+More info: http://translate.sourceforge.net/wiki/l10n/pluralforms
+
+2.1. Common plural forms
+   bg: nplurals=2; plural=(n != 1)
+   en: nplurals=2; plural=(n != 1)
+   ru: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)
+
+
+3. Compile translated .po file
+--------------------------------
+
+Run compile.sh script via
+  $ bash ./compile.sh         or
+  $ ./compile.sh
+
+
+4. Copy files to locale
+------------------------
+
+Copy default.mo AND default.po files into <cuteland>/locales/<lang_REGION>/
+LC_MESSAGES/
+
+Example:
+	cp default.po default.mo cuteland/locales/en_US/LC_MESSAGES/
+
+
+Note (1): LC_MESSAGES/ subdirectory is Required by Gettext!
+
+Note (2): Languages subdirectories must be pairs of language code (lowercase)
+          and region code (uppercase), separated by single underscore.
+          Like: bg_BG/, en_GB/, de_DE/ etc.
+

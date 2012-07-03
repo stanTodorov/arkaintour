@@ -1,0 +1,17 @@
+Order Deny,Allow
+Allow from all
+
+Satisfy Any
+
+Options -Indexes -MultiViews
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteRule ^([a-z]{2}_[A-Z]{2}[^\/]*)(.*)$ index.php?page=$2&locale=$1 [L,QSA]
+
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteRule ^(.*)$ index.php?page=$1 [L,QSA]
+</IfModule>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="{$LANG}">
+	<head>
+		<meta charset="utf-8" />
+		<title>Администрация {$TITLE}</title>
+		<link href="http://fonts.googleapis.com/css?family=Comfortaa:400,700&amp;subset=latin,cyrillic,cyrillic-ext" rel="stylesheet" type="text/css" />
+		<link href="{$CSS}general.css?v={$VERSION}" rel="stylesheet" type="text/css" />
+		<link href="{$CSS_COMMON}jquery-ui.css?v={$VERSION}" rel="stylesheet" type="text/css" />
+		<link rel="shortcut icon" href="{$URL}admin/favicon.ico?v={$VERSION}" />
+	</head>
+	<body>
+		{if $LOGGED}
+		<div id="wrapper">
+			<div id="header">
+				<h1><a href="{$URL}admin/">админ<strong>панел</strong></a></h1>
+
+				<div class="right">
+					<a class="exit" href="{$URL}admin/?page=logout&amp;token={$TOKEN}"><img src="{$IMG}icons/exit.png" alt="" /> Изход, {$USER}</a>
+				</div>
+
+			</div>
+			<div id="menu">
+				<ul>
+					<li><a href="{$URL}admin/?page=articles" {if $PAGE eq 'articles'}class="active"{/if}>Страници</a></li>
+					<li><a href="{$URL}admin/?page=categories" {if $PAGE eq 'categories'}class="active"{/if}>Категории</a></li>
+					<li><a href="{$URL}admin/?page=offers" {if $PAGE eq 'offers'}class="active"{/if}>Оферти</a></li>
+					<li><a href="{$URL}admin/?page=settings" {if $PAGE eq 'settings'}class="active"{/if}>Настройки</a></li>
+					<li><a href="{$URL}admin/?page=profile" {if $PAGE eq 'profile'}class="active"{/if}>Профил</a></li>
+				</ul>
+				<div id="timeout">Изход след: <strong>{$LOGIN_TIME_LEFT}</strong> минути</div>
+			</div>
+			<div id="content">
+				<div id="main">
+					{if $SUCCESS || $ERROR || $NOTIFY || $FATAL_ERROR}
+					<div class="msg">
+						{if $SUCCESS}<div class="success">{$SUCCESS}</div>{/if}
+						{if $ERROR}<div class="error">{$ERROR}</div>{/if}
+						{if $FATAL_ERROR}<div class="error">{$FATAL_ERROR}</div>{/if}
+						{if $NOTIFY}<div class="notify">{$NOTIFY}</div>{/if}
+					</div>
+					{/if}
+
+					{if $PAGE}
+						{include file="`$PAGE`.html"}
+					{/if}
+				</div>
+			</div>
+
+			<div id="footer">
+				<p class="center">
+					&copy; {$COPYRIGHT} NAS Tech |
+					Валидни <a href="http://validator.w3.org/check?uri=referer">xHTML 1.0</a> и
+					<a href="http://jigsaw.w3.org/css-validator/validator?uri=referer">CSS</a>
+				</p>
+			</div>
+		</div>
+
+		{else}
+			{include file="login.html"}
+		{/if}
+
+		<script type="text/javascript">
+			var URL = {
+				"site": "{$URL}",
+				"js"  : "{$JS}",
+				"css" : "{$CSS}",
+				"img" : "{$IMG}"
+			};
+		</script>
+		<script type="text/javascript" src="{$JS_COMMON}jquery.js"></script>
+		<script type="text/javascript" src="{$JS_COMMON}jquery-plugins.js?v={$VERSION}"></script>
+		<script type="text/javascript" src="{$JS}general.js?v={$VERSION}"></script>
+	</body>
+</html>

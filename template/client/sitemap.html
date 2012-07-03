@@ -1,0 +1,32 @@
+<h2>{tr}Карта на сайта{/tr}</h2>
+
+<div id="sitemap">
+	<ul>
+	{section name=i loop=$RESULT}
+		<li>
+			<a href="{$RESULT[i].url}">{$RESULT[i].name|escape}</a>
+		{if $RESULT[i].categories}
+			<ul>
+			{section name=k loop=$RESULT[i].categories}
+				<li><a href="{$RESULT[i].categories[k].url}">{$RESULT[i].categories[k].name|escape}</a></li>
+			{/section}
+			</ul>
+		{/if}
+		</li>
+	{/section}
+	</ul>
+</div>
+
+
+
+<div id="locales">
+	<h3>{tr}Езици{/tr}</h3>
+
+	<ul>
+		{section name=i loop=$LANGS}
+			<li>
+				<a href="{$URL}{$LANGS[i].code}">{$LANGS[i].name|escape}</a>
+			</li>
+		{/section}
+	</ul>
+</div>

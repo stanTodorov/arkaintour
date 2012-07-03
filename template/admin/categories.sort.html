@@ -1,0 +1,50 @@
+<table class="layout" style="width: 500px; margin: 0 auto">
+	<th>Страница</th>
+	<td>
+		<form method="post" action="{$URL}admin/?page={$PAGE}&amp;action=sort">
+		<select name="page" class="text" onchange="this.form.submit()">
+		{section name=i loop=$PAGES}
+			<option value="{$PAGES[i].id}" {if $PAGES[i].selected}selected="selected"{/if}>{$PAGES[i].name}</option>
+		{/section}
+		</select>
+		</form>
+	</td>
+</table>
+
+<form method="post" action="{$URL}admin/?page={$PAGE}&amp;action=sort">
+	<table class="list" style="width: 500px; margin: 0 auto">
+		<tr>
+			<th style="width: 90px">№</th>
+			<th>Категория</th>
+			<th colspan="2">Опции</th>
+		</tr>
+
+		{section name=i loop=$RESULT}
+
+		<tr {if $smarty.section.i.index is odd}class="odd"{/if} >
+			<td><input type="text" class="text" name="orders[{$RESULT[i].id}]" value="{$RESULT[i].order}" /></td>
+			<td>{$RESULT[i].title}</td>
+
+			<td class="center" style="width: 32px" >
+				{if $smarty.section.i.first}&nbsp;
+				{else}
+				<a class="icon" href="{$URL}admin/?page={$PAGE}&amp;action=sort&amp;dir=up&amp;id={$RESULT[i].id}" title="Премести нагоре"><span class="up"></span></a>
+				{/if}
+			</td>
+			<td class="center" style="width: 32px" >
+				{if $smarty.section.i.last}&nbsp;
+				{else}
+				<a class="icon" href="{$URL}admin/?page={$PAGE}&amp;action=sort&amp;dir=down&amp;id={$RESULT[i].id}" title="Премести надолу"><span class="down"></span></a>
+				{/if}
+			</td>
+		</tr>
+		{sectionelse}
+		<tr><td class="center" colspan="4">Няма намерени резултати!</td></tr>
+		{/section}
+	</table>
+
+	<div class="buttons" style="width: 500px; margin: 10px auto; text-align: left;">
+		<span class="button"><button type="submit" name="submit">Редакция</button></span>
+
+	</div>
+</form>

@@ -1,0 +1,201 @@
+{if $OFFER}
+	{if $SUCCESS}<div class="success">{$SUCCESS}</div>{/if}
+
+	<div id="offer">
+		<div class="heading {if $OFFER.top_offer}top-offer{/if}">
+			<h2 class="name">{$OFFER.category|escape}</h2>
+			<h3>{$OFFER.name|escape}</h3>
+			<div class="price">{$OFFER.price|escape}</div>
+			{if $BACK}<a href="{$BACK}" id="back">{tr}Назад{/tr}</a>{/if}
+
+			<div class="facebook">
+				<div class="fb-like" data-href="{$OFFER.url}" data-send="false" data-layout="button_count" data-width="123" data-show-faces="false"></div>
+			</div>
+
+			<div class="clear"></div>
+		</div>
+
+		<div class="options">
+			<a href="#query" class="query"> {tr}Запитване за оферта{/tr}</a>
+			<a href="#send-to-friend" class="friend">{tr}Изпрати на приятел{/tr}</a>
+			<a href="#" class="print"> {tr}Отпечатване{/tr}</a>
+		</div>
+
+		<div class="summary">
+			<div class="program">
+				<dl>
+				{if $OFFER.route}
+					<dt>{tr}Маршрут:{/tr}</dt>
+					<dd>{$OFFER.route|escape}</dd>
+				{/if}
+
+				{if $OFFER.duration}
+					<dt>{tr}Продължителност:{/tr}</dt>
+					<dd>{$OFFER.duration|escape}</dd>
+				{/if}
+				{if $OFFER.transport}
+					<dt>{tr}Транспорт:{/tr}</dt>
+					<dd>{$OFFER.transport|escape}</dd>
+				{/if}
+
+				{if $OFFER.price}
+					<dt>{tr}Цена:{/tr}</dt>
+					<dd><div class="price">{$OFFER.price|escape}</div></dd>
+				{/if}
+
+
+				{if $OFFER.dates}
+					<dt>{tr}Дати на отпътуване:{/tr}</dt>
+					<dd>
+						<div class="date-range">
+							<ul>
+							{foreach from=$OFFER.dates item=date}
+								<li>{$date}</li>
+							{/foreach}
+							</ul>
+						</div>
+					</dd>
+				{/if}
+
+				</dl>
+			</div>
+
+			{if $OFFER.pictures}
+			<div class="gallery">
+				<ul>
+				{section name=i loop=$OFFER.pictures}
+					<li>
+						<a class="zoom" data-fancybox-group="true" href="{$OFFER.pictures[i].image}">
+							<img src="{$OFFER.pictures[i].thumb}" alt="" title="" />
+						</a>
+					</li>
+				{/section}
+				</ul>
+			</div>
+			{/if}
+		</div>
+
+		<div class="description">
+			{$OFFER.content}
+		</div>
+
+		<div class="options">
+			<a href="#query" class="query"> {tr}Запитване за оферта{/tr}</a>
+			<a href="#send-to-friend" class="friend">{tr}Изпрати на приятел{/tr}</a>
+			<a href="#" class="print"> {tr}Отпечатване{/tr}</a>
+		</div>
+
+		{if $ERROR}<div class="error">{$ERROR}</div>{/if}
+
+		<div class="hidden {if $FORM.query}no-hidden{/if}" id="query">
+			<form id="form" method="post" action="{$URL}{$LOCALE}/{$URI}">
+				<div class="forms" style="width: 450px">
+					<div class="sep">{tr}Запитване за оферта{/tr}</div>
+
+					<div class="row">
+						<label>{tr}Вашето име{/tr}</label>
+						<div class="cell">
+							<input type="text" class="text" name="name" value="{$RESULT.name|escape}" />
+							{if $ERRORS.name}<div class="small-error">{$ERRORS.name}</div>{/if}
+						</div>
+					</div>
+					<div class="row">
+						<label>{tr}Вашият ел. адрес{/tr}</label>
+						<div class="cell">
+							<input type="text" class="text" name="email" value="{$RESULT.email|escape}" />
+							{if $ERRORS.email}<div class="small-error">{$ERRORS.email}</div>{/if}
+						</div>
+					</div>
+					<div class="row">
+						<label>{tr}Телефон{/tr}</label>
+						<div class="cell">
+							<input type="text" class="text" name="phone" value="{$RESULT.phone|escape}" />
+							{if $ERRORS.phone}<div class="small-error">{$ERRORS.phone}</div>{/if}
+						</div>
+					</div>
+
+					<div class="row">
+						<label>{tr}Съобщение{/tr}</label>
+						<div class="cell">
+							<textarea class="text" name="message" rows="60" cols="10">{$RESULT.message|escape}</textarea>
+							{if $ERRORS.message}<div class="small-error">{$ERRORS.message}</div>{/if}
+						</div>
+					</div>
+
+					<div class="row" style="text-align: center">
+						<input type="hidden" name="token" value="{$TOKEN}" />
+						<span class="button"><button type="submit" name="query">{tr}Изпрати запитване{/tr}</button></span>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<div class="hidden {if $FORM.send2friend}no-hidden{/if}" id="send-to-friend">
+			<form id="form" method="post" action="{$URL}{$LOCALE}/{$URI}">
+				<div class="forms" style="width: 450px">
+					<div class="sep">{tr}Изпрати на приятел{/tr}</div>
+
+					<div class="row">
+						<label>{tr}Вашето име{/tr}</label>
+						<div class="cell">
+							<input type="text" class="text" name="fromName" value="{$RESULT.fromName|escape}" />
+							{if $ERRORS.fromName}<div class="small-error">{$ERRORS.fromName}</div>{/if}
+						</div>
+					</div>
+					<div class="row">
+						<label>{tr}Вашият e-mail{/tr}</label>
+						<div class="cell">
+							<input type="text" class="text" name="fromEmail" value="{$RESULT.fromEmail|escape}" />
+							{if $ERRORS.fromEmail}<div class="small-error">{$ERRORS.fromEmail}</div>{/if}
+						</div>
+					</div>
+
+					<div class="row">
+						<label>{tr}E-mail на получателя{/tr}</label>
+						<div class="cell">
+							<input type="text" class="text" name="toEmail" value="{$RESULT.toEmail|escape}" />
+							{if $ERRORS.toEmail}<div class="small-error">{$ERRORS.toEmail}</div>{/if}
+						</div>
+					</div>
+
+					<div class="row" style="text-align: center">
+						<input type="hidden" name="token" value="{$TOKEN}" />
+						<span class="button"><button type="submit" name="send2friend">{tr}Изпрати{/tr}</button></span>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<div class="clear"></div>
+	</div>
+{else if $OFFERS}
+	<h2>{$SECTION|escape}</h2>
+	{$CONTENT}
+
+	{if $RESULT}
+	<ul class="offers">
+		{section name=i loop=$RESULT}
+		<li>
+			<div class="img" {if $RESULT[i].image}style="background-image: url('{$RESULT[i].image}');"{/if}></div>
+			<div class="description">
+				<h5>{$RESULT[i].name|escape}</h5>
+				<p>{$RESULT[i].content}</p>
+				<div class="price">{$RESULT[i].price|escape}</div>
+			</div>
+			<div class="clear"></div>
+			<div class="more">
+				<a href="{$RESULT[i].url}" class="more">{tr}Към офертата{/tr}</a>
+			</div>
+		</li>
+		{/section}
+	</ul>
+	{else}
+		<p class="center">{tr}Няма намерени резултати!{/tr}</p>
+	{/if}
+	
+	{if $PAGING}<div class="paging">{$PAGING}</div>{/if}
+
+{else}
+	{$CONTENT}
+
+{/if}

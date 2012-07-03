@@ -1,0 +1,17 @@
+#search input { line-height: 24px }
+#categories li { display: inline }
+#categories li a {
+	display: block;
+	margin: 5px 0;
+}
+
+
+#content .bottom, #content .top { font-size: 1px }
+#suggestions ul.offers {
+	height: 100%;
+	overflow: hidden;
+}
+
+#suggestions ul.offers li .img { margin: 2px 4px 10px 4px }
+#suggestions .offers li .description { overflow: hidden }
+#logo { background-image: url('./../images/logo.gif') }

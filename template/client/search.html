@@ -1,0 +1,41 @@
+<h2>{$L_SEARCH}</h2>
+
+
+{if $RESULT}
+	<h3>{tr}Намерени страници{/tr}</h3>
+	<div id="sitemap">
+		<ul>
+		{section name=i loop=$RESULT}
+			<li><a href="{$RESULT[i].url}">{$RESULT[i].name|escape}</a></li>
+		{/section}
+		</ul>
+	</div>
+
+	<br /><br />
+{/if}
+
+{if $OFFERS}
+
+	<h3>{tr}Намерени оферти{/tr}</h3>
+	<br />
+	<ul class="offers">
+		{section name=i loop=$OFFERS}
+		<li>
+			<div class="img" {if $OFFERS[i].image}style="background-image: url('{$OFFERS[i].image}');"{/if}></div>
+			<div class="description">
+				<h5>{$OFFERS[i].name|escape}</h5>
+				<p>{$OFFERS[i].content}</p>
+				<div class="price">{$OFFERS[i].price|escape}</div>
+			</div>
+			<div class="clear"></div>
+			<div class="more">
+				<a href="{$OFFERS[i].url}" class="more">{tr}Към офертата{/tr}</a>
+			</div>
+		</li>
+		{/section}
+	</ul>
+{/if}
+
+{if NOT $RESULT AND NOT $OFFERS}
+	<p class="center">{tr}Няма намерени резултати!{/tr}</p>
+{/if}

@@ -1,0 +1,20 @@
+{if $ACTION eq 'options'}
+
+	{section name=i loop=$RESULT}
+		<option value="{$RESULT[i].id}">{$RESULT[i].name|escape}</option>
+	{/section}
+
+{else if $ACTION eq 'languages'}
+	{section name=i loop=$RESULT}
+		<option value="{$RESULT[i].id}">{$RESULT[i].title}</option>
+	{/section}
+
+{else if $ACTION eq 'categories'}
+	{section name=i loop=$RESULT}
+		<optgroup label="{$RESULT[i].title|escape}">
+		{section name=j loop=$RESULT[i].list}
+			<option value="{$RESULT[i].list[j].id}">{$RESULT[i].list[j].title}</option>
+		{/section}
+		</optgroup>
+	{/section}
+{/if}

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="{$LANG}">
+	<head>
+		<meta charset="utf-8" />
+		<title>{$TITLE}</title>
+		<link href="http://fonts.googleapis.com/css?family=Comfortaa:400,700&amp;subset=latin,cyrillic,cyrillic-ext" rel="stylesheet" type="text/css" />
+		<link href="{$CSS}general.css?v={$VERSION}" rel="stylesheet" type="text/css" />
+		<link href="{$CSS_COMMON}jquery-ui.css?v={$VERSION}" rel="stylesheet" type="text/css" />
+		<link href="{$CSS}print.css?v={$VERSION}" rel="stylesheet" type="text/css" media="print" />
+		<!--[if IE 6]><link href="{$CSS}ie6fix.css?v={$VERSION}" rel="stylesheet" type="text/css" /><![endif]-->
+		<link rel="shortcut icon" href="{$URL}favicon.ico?v={$VERSION}" />
+
+		<meta property="og:title" content="{$TITLE}" />
+		{if $DESCRIPTION}<meta property="og:description" content="{$DESCRIPTION}" />{/if}
+		<meta property="og:url" content="{$URL}" />
+		<meta property="og:site_name" content="DressBOX" />
+
+		<meta property="og:image" content="{$IMG}facebook-logo.png" />
+		<link rel="image_src" href="{$IMG}facebook-logo.png" />
+{if $KEYWORDS}
+		<meta name="keywords" content="{$KEYWORDS}" />
+{/if}
+{if $DESCRIPTION}
+		<meta name="description" content="{$DESCRIPTION}" />
+{/if}
+	</head>
+	<body>
+		<div id="container">
+			<div class="wrapper">
+				<div id="header">
+					<h1 id="logo"><a  href="{$URL}{$LOCALE}/" title="{tr}Начало{/tr}">{tr}Аркаин Тур{/tr}</a></h1>
+					<ul id="language">
+					{section name=i loop=$LANGS}
+						<li class="{$LANGS[i].code|escape}"><a href="{$URL}{$LANGS[i].code|escape}/" title="{$LANGS[i].name|escape}"></a></li>
+					{/section}
+					</ul>
+
+					<div id="facebook-page">
+						<div class="fb-like" data-href="http://bg-bg.facebook.com/pages/ARKAIN-TOUR/270066048749" data-send="false" data-layout="button_count" data-width="250" data-show-faces="false"></div>
+					</div>
+
+					<ul id="menu">
+					{section name=i loop=$MENU}
+						<li><a href="{$URL}{$LOCALE}/{$MENU[i].url}">{$MENU[i].title|escape}</a></li>
+					{/section}
+					</ul>
+
+					<div id="search">
+						<form action="{$URL}{tr}търсене{/tr}" method="post">
+							<input type="text" class="q" name="q" value="{$SEARCH|escape}" />
+							<div class="clear"></div>
+						</form>
+					</div>
+				</div>
+
+
+				<div id="slideshow">
+					<ul class="slides">
+						<li>
+							<div class="img">
+								<img src="{$IMG}slideshow/slide-1.jpg" alt="Пътешествия" title="" />
+							</div>
+							<div class="info">
+								<blockquote>
+									Светът е книга и тези, които не пътуват, успяват да прочетат само една страница от нея.
+									<span>Св. Августин</span>
+								</blockquote>
+
+							</div>
+						</li>
+						<li>
+							<div class="img">
+								<img src="{$IMG}slideshow/slide-2.jpg" alt="Хотели" title="" />
+							</div>
+							<div class="info">
+								<h4>&nbsp;</h4>
+								<p>Тайната на всяко едно пътуване се състои в това, човек да се научи да изживява всеки миг – тук и сега.</p>
+							</div>
+						</li>
+						<li>
+							<div class="img">
+								<img src="{$IMG}slideshow/slide-3.jpg" alt="Хотели" title="" />
+							</div>
+							<div class="info">
+								<h4>Vivamus neque urna, viverra a</h4>
+								<p>Ut nisl quam, elementum ac tempor sit amet, consequat eu lacus. Duis facilisis cursus arcu.</p>
+							</div>
+						</li>
+					</ul>
+				</div>
+
+				<div id="content">
+					<div class="top"></div>
+					<div class="content">
+						<div id="sidebar">
+						{if $SIDEBAR}
+							<h2>{tr}Категории{/tr}</h2>
+
+							<ul id="categories">
+							{section name=i loop=$SIDEBAR}
+								<li><a href="{$SIDEBAR[i].url}">{$SIDEBAR[i].name|escape}</a></li>
+							{/section}
+							</ul>
+						{/if}
+						</div>
+
+
+						<div id="main">
+							{if $PAGE}{include file="`$PAGE`.html"}{/if}
+						</div>
+
+
+					</div>
+					<div class="bottom"></div>
+				</div>
+
+				{if $LANG eq 'ru'}
+				<a href="http://www.yandex.ru/" id="banner-russia"></a>
+
+				{/if}
+
+				{if $SUGGESTIONS}
+				<div id="suggestions">
+					<div class="left">
+						<h4>{$SUGGESTIONS.left.title|escape}</h4>
+						{assign var="list" value=$SUGGESTIONS.left.offers}
+
+						<ul class="offers">
+						{section name=i loop=$list}
+							<li>
+								<div class="img" {if $list[i].image}style="background-image: url('{$list[i].image}');"{/if}></div>
+								<div class="description">
+									<h5>{$list[i].name|escape}</h5>
+									<p>{$list[i].content}</p>
+									{if $list[i].price}<div class="price">{$list[i].price|escape}</div>{/if}
+								</div>
+								<div class="clear"></div>
+								<div class="more">
+									<a href="{$list[i].url}" class="more">Към офертата</a>
+								</div>
+							</li>
+						{/section}
+						</ul>
+					</div>
+
+					<div class="sep"></div>
+
+					<div class="right">
+						<h4>{$SUGGESTIONS.right.title|escape}</h4>
+						{assign var="list" value=$SUGGESTIONS.right.offers}
+
+						<ul class="offers">
+						{section name=i loop=$list}
+							<li>
+								<div class="img" {if $list[i].image}style="background-image: url('{$list[i].image}');"{/if}></div>
+								<div class="description">
+									<h5>{$list[i].name|escape}</h5>
+									<p>{$list[i].content}</p>
+									{if $list[i].price}<div class="price">{$list[i].price|escape}</div>{/if}
+								</div>
+								<div class="clear"></div>
+								<div class="more">
+									<a href="{$list[i].url}" class="more">Към офертата</a>
+								</div>
+							</li>
+						{/section}
+						</ul>
+					</div>
+				</div>
+				{/if}
+			</div>
+		</div>
+
+		<div id="footer">
+			<div class="copyrights">
+				&copy; {$COPYRIGHT} {tr}Аркаин Тур{/tr}<span id="nastech"> | <a href="http://www.nasbg.com">NASTech</a></span><br />
+
+			</div>
+
+			<ul class="menu">
+				{section name=i loop=$MENU}
+					<li><a href="{$MENU[i].url}">{$MENU[i].title|escape}</a></li>
+				{/section}
+				<li><a href="{$URL}{tr}карта-на-сайта{/tr}">{tr}Карта на сайта{/tr}</a></li>
+			</ul>
+		</div>
+
+		<script type="text/javascript">
+			var URL = {
+				"site": "{$URL}",
+				"js"  : "{$JS}",
+				"css" : "{$CSS}",
+				"img" : "{$IMG}"
+			};
+		</script>
+		<script type="text/javascript" src="{$JS_COMMON}jquery.js"></script>
+		<script type="text/javascript" src="{$JS_COMMON}jquery-plugins.js?v={$VERSION}"></script>
+		<script type="text/javascript" src="{$JS}general.js?v={$VERSION}"></script>
+		{if NOT $DEBUG}
+		<script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-30024348-1']);
+			_gaq.push(['_trackPageview']);
+
+			(function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+		</script>
+		{/if}
+		<div id="fb-root"></div>
+		<script type="text/javascript">
+		(function(d, s, id){
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) return;
+			js = d.createElement(s); js.id = id;
+			js.src = "//connect.facebook.net/{$LOCALE}/all.js#xfbml=1";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+		</script>
+	</body>
+</html>

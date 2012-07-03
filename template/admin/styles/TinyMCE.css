@@ -1,0 +1,27 @@
+* {
+	margin: 0;
+	padding: 0;
+	outline: 0 none;
+}
+
+body {
+	font-family: "Verdana", "Arial", sans-serif;
+	font-size: 100%;
+	font-size: 0.9em
+}
+
+h2 {
+	font-family: "Comfortaa", "Arial", "Verdana", sans-serif;
+	text-align: center;
+	margin: 10px 0 20px 0;
+	font-size: 1.25em;
+}
+
+h3 {
+	text-align: left;
+	margin: 10px 0 5px 0;
+	font-size: 1.00em;
+}
+
+p { margin: 5px 0 10px 0 }
+ul { margin: 10px 25px 20px }

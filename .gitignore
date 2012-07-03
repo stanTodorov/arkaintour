@@ -1,0 +1,8 @@
+cache/*
+!cache/.htaccess
+uploads/*
+!uploads/.htaccess
+~*
+*~
+Thumbs.db
+template/admin/scripts/TinyMCE/plugins/ibrowser/scripts/phpThumb/cache/*
