@@ -32,10 +32,12 @@ $cfg['smarty.compile'] = 'cache';
 // file upload
 $cfg['upload.dir'] = 'uploads';
 $cfg['upload.dir.offers'] = 'uploads/offers';
+$cfg['upload.dir.attachments'] = 'uploads/downloads';
 $cfg['upload.img.names'] = 'normal,small';
 $cfg['upload.img.dir'] = ',96x96';
 $cfg['upload.img.size'] = '1600,96';
 $cfg['upload.img.quality'] = '100,86';
+
 
 // smtp mail settings
 $cfg['smtp.hostname'] = 'nasbg.com';

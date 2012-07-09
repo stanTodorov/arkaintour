@@ -186,6 +186,8 @@ div.input span, .icon span {
 .icon span.notes {background-position: -41px -159px}
 .icon span.username { background-position: 0 -66px}
 .icon span.password { background-position: -78px -66px}
+.icon span.photo { background: url('./../images/icons/photo.png') no-repeat }
+.icon span.attachment { background: url('./../images/icons/attachment.png') no-repeat }
 
 
 #wrapper {
@@ -1268,4 +1270,14 @@ span.button {
 }
 .gallery li label input {
 	vertical-align: middle;
+}
+
+
+.files {
+	margin: 10px 0;
+	list-style: none;
+}
+
+.files li {
+	margin: 1px 2px 2px;
 }

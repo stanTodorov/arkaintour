@@ -79,6 +79,17 @@
 			{$OFFER.content}
 		</div>
 
+		{if $OFFER.attachments}
+		<div class="attachments">
+			<p>{tr}За актуални цени, вижте следните файлове:{/tr}</p>
+			<ol>
+			{section name=i loop=$OFFER.attachments}
+				<li><a href="{$OFFER.attachments[i].download}">{$OFFER.attachments[i].filename} ({$OFFER.attachments[i].size})</a></li>
+			{/section}
+			</ol>
+		</div>
+		{/if}
+
 		<div class="options">
 			<a href="#query" class="query"> {tr}Запитване за оферта{/tr}</a>
 			<a href="#send-to-friend" class="friend">{tr}Изпрати на приятел{/tr}</a>
@@ -192,7 +203,7 @@
 	{else}
 		<p class="center">{tr}Няма намерени резултати!{/tr}</p>
 	{/if}
-	
+
 	{if $PAGING}<div class="paging">{$PAGING}</div>{/if}
 
 {else}

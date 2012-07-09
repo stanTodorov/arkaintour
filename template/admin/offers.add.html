@@ -12,7 +12,6 @@
 				</select>
 			</td>
 		</tr>
-
 		<tr>
 			<th>Категорията</th>
 			<td>
@@ -29,7 +28,6 @@
 				{if $ERRORS.category}<div class="small-error">{$ERRORS.category}</div>{/if}
 			</td>
 		</tr>
-
 		<tr>
 			<th>Заглавие</th>
 			<td>
@@ -37,15 +35,6 @@
 				{if $ERRORS.name}<div class="small-error">{$ERRORS.name}</div>{/if}
 			</td>
 		</tr>
-
-		<tr>
-			<th>Маршрут</th>
-			<td>
-				<input type="text" class="text" name="route" value="{$RESULT.route|escape}" />
-				{if $ERRORS.route}<div class="small-error">{$ERRORS.route}</div>{/if}
-			</td>
-		</tr>
-
 		<tr>
 			<th>Транспорт</th>
 			<td>
@@ -53,15 +42,13 @@
 				{if $ERRORS.transport}<div class="small-error">{$ERRORS.transport}</div>{/if}
 			</td>
 		</tr>
-
 		<tr>
-			<th>Цена</th>
+			<th>Маршрут</th>
 			<td>
-				<input type="text" class="text" name="price" value="{$RESULT.price|escape}" />
-				{if $ERRORS.price}<div class="small-error">{$ERRORS.price}</div>{/if}
+				<input type="text" class="text" name="route" value="{$RESULT.route|escape}" />
+				{if $ERRORS.route}<div class="small-error">{$ERRORS.route}</div>{/if}
 			</td>
 		</tr>
-
 		<tr>
 			<th>Продължителност</th>
 			<td>
@@ -85,18 +72,47 @@
 				{if $ERRORS.dates}<div class="small-error">{$ERRORS.dates}</div>{/if}
 			</td>
 		</tr>
-
+		<tr>
+			<th>Цена</th>
+			<td>
+				<input type="text" class="text" name="price" value="{$RESULT.price|escape}" />
+				{if $ERRORS.price}<div class="small-error">{$ERRORS.price}</div>{/if}
+			</td>
+		</tr>
+		<tr><td colspan="2">&nbsp;</td></tr>
 		<tr>
 			<th class="top">Снимки (<a id="addImage" class="icon" href="#" title="Добавяне на ново поле"><span class="add no-text"></span></a>)</th>
 			<td>
-				<div class="filesList">
-					<input type="file" name="pictures[]" />
+				<div class="images-list">
+					<div class="icon"><span class="photo"></span></div> <input type="file" name="pictures[]" />
 				</div>
 				{if $ERRORS.pictures}<div class="small-error">{$ERRORS.pictures}</div>{/if}
 			</td>
 		</tr>
+		<tr><td colspan="2" style="font-size: 1px; padding: 2px 0 ">&nbsp;</td></tr>
+		<tr>
+			<th class="top">Прикачени файлове (<a id="addFile" class="icon" href="#" title="Добавяне на ново поле"><span class="add no-text"></span></a>)</th>
+			<td>
+				<div class="files-list">
+					<div class="icon"><span class="attachment"></span></div> <input type="file" name="attachments[]" />
+				</div>
+				{if $ERRORS.attachments}<div class="small-error">{$ERRORS.attachments}</div>{/if}
 
+				<br />
+				<p>Позволени разширения на файлове:</p>
+				<ul style="margin: 10px 25px">
+					<li>DOC, DOCX (Word);</li>
+					<li>XLS, XLSX (Excel);</li>
+					<li>PPT, PPTX (PowerPoint);</li></div>
+					<li>PDF</li>
+					<li>ZIP</li>
+					<li>RAR</li>
+					<li>7z (7-Zip)</li>
+				</ul>
 
+				<p>Максимален разрешен размер на всички прикачени файлове: <strong>{$MAX_UPLOAD_SIZE}</strong> </p>
+			</td>
+		</tr>
 		<tr>
 			<th>Опции</th>
 			<td>

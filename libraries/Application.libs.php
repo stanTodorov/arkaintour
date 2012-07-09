@@ -733,3 +733,33 @@ function LoadPagesData()
 
 }
 
+
+
+function GetMaxUploadLimits()
+{
+	$filesize = array('size' => PHP_INT_MAX, 'qty' => 'G');
+
+	$maxsize = array(
+		@ini_get('upload_max_filesize'),
+		@ini_get('post_max_size'),
+		@ini_get('memory_limit')
+	);
+
+	foreach ($maxsize as $index => $val) {
+		$qty = preg_replace('/[^a-z]+/i', '', $val);
+
+		if ((int) $val < $filesize['size'] || $qty !== $filesize['qty']) {
+			$filesize['size'] = (int) $val;
+			$filesize['qty'] = $qty;
+		}
+	}
+
+	switch (mb_strtolower($filesize['qty'])) {
+	case 'm': $filesize['qty'] = 'MB'; break;
+	case 'g': $filesize['qty'] = 'GB'; break;
+	case 'k': $filesize['qty'] = 'kB'; break;
+	default: $filesize['qty'] = 'B'; break;
+	}
+
+	return $filesize['size'] . ' ' . $filesize['qty'];
+}

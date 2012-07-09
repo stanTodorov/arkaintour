@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-06-29 16:27+0300\n"
-"PO-Revision-Date: 2012-07-03 12:59+0200\n"
+"PO-Revision-Date: 2012-07-09 12:28+0200\n"
 "Last-Translator: Миалий <mialygk@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -499,4 +499,8 @@ msgstr "Предложения найден"
 #: ../../template/client/sitemap.html:23
 msgid "Езици"
 msgstr "Языки"
+
+#: ../../template/client/article.html:84
+msgid "За актуални цени, вижте следните файлове:"
+msgstr "В текущих ценах, пожалуйста, посмотрите на следующие файлы:"
 

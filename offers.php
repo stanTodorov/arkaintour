@@ -263,6 +263,24 @@ function ShowOffer($articleId, $offerId)
 		}
 	}
 
+	// get attachments
+	$sql = "SELECT `filename`, `size`
+		FROM `".TABLE_OFFERS_FILES."`
+		WHERE `offer_id` = '".intval($offerId)."'";
+	if ($db->query($sql) && $db->getCount()) {
+		$url = BASE_URL . CFG('upload.dir.attachments') . '/';
+
+		$result['attachments'] = array();
+
+		while ($row = $db->getAssoc()) {
+			$result['attachments'][] = array(
+				'filename' => $row['filename'],
+				'download' => $url . $row['filename'],
+				'size' => HumanSize($row['size'], 2, true)
+			);
+		}
+	}
+
 	$skin->assign('OFFER', $result);
 
 	QueryForm($result);

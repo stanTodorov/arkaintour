@@ -30,6 +30,8 @@ function AddOffer()
 	global $db, $skin, $user, $ml, $page;
 	$skin->assign('ACTION', 'add');
 
+	$skin->assign('MAX_UPLOAD_SIZE', GetMaxUploadLimits());
+
 	$lang = isset($_SESSION['lang']) ? (int) $_SESSION['lang'] : 0;
 	$lang = isset($_POST['lang']) ? (int) $_POST['lang'] : $lang;
 
@@ -108,6 +110,17 @@ function AddOffer()
 
 	if (!isset($_POST['submit'])) return;
 
+	$extensions = array (
+		'jpg', 'jpeg',
+		'doc', 'docx',
+		'xls', 'xlsx',
+		'ppt', 'pptx',
+		'zip',
+		'pdf',
+		'rar',
+		'7z'
+	);
+
 	$errors = FormValidate($_POST, $data, array(
 		'lang' => array('req' => true, 'is' => 'int'),
 		'category' => array('req' => true, 'is' => 'int'),
@@ -130,13 +143,13 @@ function AddOffer()
 		}
 	}
 
-
+	// Move to gallery and resize all uploaded pictures
 	$resizes = GetOffersDirs();
 	reset($resizes);
 	$basePath = current($resizes);
 	$basePath = $basePath['path'];
-	$files = array();
-	$count = 0;
+	$pictures = array();
+	$picturesCount = 0;
 
 	if (isset($_FILES['pictures']) && count($_FILES['pictures'])) {
 		foreach ($_FILES['pictures']['error'] as $file => $error) {
@@ -144,7 +157,7 @@ function AddOffer()
 				continue;
 			}
 
-			$count++;
+			$picturesCount++;
 
 			$uploaded = $_FILES['pictures']['tmp_name'][$file];
 			$name = $_FILES['pictures']['name'][$file];
@@ -170,7 +183,7 @@ function AddOffer()
 					$paths[$image['name']] = $image['location'];
 				}
 
-				$files[] = array (
+				$pictures[] = array (
 					'filename' => $filename,
 					'path' => $paths
 				);
@@ -182,8 +195,57 @@ function AddOffer()
 		}
 	}
 
-	if ($count && !count($files)) {
+	if ($picturesCount && !count($pictures)) {
 		$errors['pictures'] = 'Възникна грешка с всички качени снимки!';
+	}
+
+	// Move to upload/ dir all uploaded attachments
+	$basePath = FixPathName(BASE_PATH . CFG('upload.dir.attachments'));
+	$attachments = array();
+	$attachmentsCount = 0;
+
+	if (isset($_FILES['attachments']) && count($_FILES['attachments'])) {
+		CreateDirPath($basePath);
+
+		foreach ($_FILES['attachments']['error'] as $file => $error) {
+			$mime =  mb_strtolower($_FILES['attachments']['type'][$file]);
+
+			// upload error or not allowed mime type
+			if ($error !== UPLOAD_ERR_OK) {
+				continue;
+			}
+
+			$attachmentsCount++;
+
+			$uploaded = $_FILES['attachments']['tmp_name'][$file];
+			$name = $_FILES['attachments']['name'][$file];
+			$filename = GetValidFilename($basePath, $name);
+			$ext = $filename['ext'];
+			$filename = $filename['filename'];
+
+			if (!in_array($ext, $extensions)) {
+				continue;
+			}
+
+			try {
+				if (!@move_uploaded_file($uploaded, $basePath . $filename)) {
+					throw new Exception("Can't move uploaded file!");
+				}
+
+				$attachments[] = array (
+					'filename' => $filename,
+					'size' => filesize($basePath . $filename),
+					'path' => $basePath
+				);
+			} catch(Exception $e) {
+				@unlink($basePath . $filename);
+				@unlink($uploaded);
+			}
+		}
+	}
+
+	if ($attachmentsCount && !count($attachments)) {
+		$errors['attachments'] = 'Възникна грешка с всички прикачени файлове!';
 	}
 
 	if (count($errors) > 0) {
@@ -191,12 +253,19 @@ function AddOffer()
 		$skin->assign('RESULT', $data);
 		$skin->assign('ERRORS', $errors);
 
-		if (count($files)) {
-			foreach ($files as $file) {
+		if (count($pictures)) {
+			// delete uploaded images
+			foreach ($pictures as $file) {
 				foreach ($file['path'] as $path) {
 					@unlink(BASE_PATH . $path . $file['filename']);
 					DeleteEmptyTree(BASE_PATH . $path);
 				}
+			}
+
+			// delete uploaded attachments
+			foreach ($attachments as $file) {
+				@unlink($file['path'] . $file['filename']);
+				DeleteEmptyTree($file['path']);
 			}
 		}
 		return;
@@ -238,12 +307,19 @@ function AddOffer()
 		$skin->assign('ERROR', $ml['L_ERROR_DB_QUERY']);
 		$skin->assign('RESULT', $data);
 
-		if (count($files)) {
-			foreach ($files as $file) {
+		if (count($pictures)) {
+			// delete uploaded images
+			foreach ($pictures as $file) {
 				foreach ($file['path'] as $path) {
 					@unlink(BASE_PATH . $path . $file['filename']);
 					DeleteEmptyTree(BASE_PATH . $path);
 				}
+			}
+
+			// delete uploaded attachments
+			foreach ($attachments as $file) {
+				@unlink($file['path'] . $file['filename']);
+				DeleteEmptyTree($file['path']);
 			}
 		}
 		return;
@@ -272,10 +348,10 @@ function AddOffer()
 
 	}
 
-	if (count($files)) {
+	if (count($pictures)) {
 		$values = '';
 
-		foreach ($files as $file) {
+		foreach ($pictures as $file) {
 			$values .= "(NULL, '".$id."', '";
 			$values .= $db->escapeString($file['filename']) . "', ";
 			$values .= 'NOW()), ';
@@ -292,6 +368,29 @@ function AddOffer()
 		$db->query($sql);
 	}
 
+
+	if (count($attachments)) {
+		$values = '';
+
+		foreach ($attachments as $file) {
+			$values .= "(NULL, '".$id."', '";
+			$values .= $db->escapeString($file['filename']) . "', '";
+			$values .= (int) $file['size'] . "', ";
+			$values .= 'NOW()), ';
+		}
+
+		$values = rtrim($values, ", ");
+
+		$sql = "INSERT INTO `".TABLE_OFFERS_FILES."` (
+				`id`,
+				`offer_id`,
+				`filename`,
+				`size`,
+				`date`
+			) VALUES ".$values;
+		$db->query($sql);
+	}
+
 	$_SESSION['lang'] = $data['lang'];
 
 	MsgPush('success', 'Успешно добавена оферта!');
@@ -302,6 +401,8 @@ function EditOffer()
 {
 	global $db, $skin, $user, $ml, $page;
 	$skin->assign('ACTION', 'edit');
+
+	$skin->assign('MAX_UPLOAD_SIZE', GetMaxUploadLimits());
 
 	$id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 	if ($id <= 0) {
@@ -347,7 +448,7 @@ function EditOffer()
 	}
 
 	// remove selected images?
-	$remove = isset($_POST['remove']) ? $_POST['remove'] : array();
+	$remove = isset($_POST['remove_photos']) ? $_POST['remove_photos'] : array();
 	if (is_array($remove) && count($remove)) {
 		$ids = array();
 
@@ -356,7 +457,6 @@ function EditOffer()
 		}
 
 		$ids = "'" . implode("', '", $ids) . "'";
-
 		$sql = "SELECT `filename`
 			FROM `".TABLE_OFFERS_PICTURES."`
 			WHERE `id` IN (".$ids.")";
@@ -371,6 +471,34 @@ function EditOffer()
 			}
 
 			$sql = "DELETE FROM `".TABLE_OFFERS_PICTURES."`
+				WHERE `id` IN (".$ids.")";
+			$db->query($sql);
+		}
+	}
+
+
+	// remove selected attachments?
+	$remove = isset($_POST['remove_attachments']) ? $_POST['remove_attachments'] : array();
+	if (is_array($remove) && count($remove)) {
+		$ids = array();
+
+		foreach ($remove as $attach => $tmp) {
+			$ids[] = (int) $attach;
+		}
+
+		$ids = "'" . implode("', '", $ids) . "'";
+		$sql = "SELECT `filename`
+			FROM `".TABLE_OFFERS_FILES."`
+			WHERE `id` IN (".$ids.")";
+		if ($db->query($sql) && $db->getCount()) {
+			$path = FixPathName(BASE_PATH . CFG('upload.dir.attachments'));
+
+			while ($row = $db->getAssoc()) {
+				@unlink($path . $row['filename']);
+				DeleteEmptyTree($path);
+			}
+
+			$sql = "DELETE FROM `".TABLE_OFFERS_FILES."`
 				WHERE `id` IN (".$ids.")";
 			$db->query($sql);
 		}
@@ -391,6 +519,26 @@ function EditOffer()
 				'id' => $row['id'],
 				'image' => $resize['normal']['url'] . $row['filename'],
 				'thumb' => $resize['small']['url'] . $row['filename']
+			);
+		}
+	}
+
+	// get attachments if exists
+	$sql = "SELECT `id`, `filename`, `size`
+		FROM `".TABLE_OFFERS_FILES."`
+		WHERE `offer_id` = '".$id."'";
+	if ($db->query($sql) && $db->getCount()) {
+
+		$url = BASE_URL . CFG('upload.dir.attachments') . '/';
+
+		$result['attachments'] = array();
+
+		while ($row = $db->getAssoc()) {
+			$result['attachments'][] = array(
+				'id' => $row['id'],
+				'filename' => $row['filename'],
+				'size' => HumanSize($row['size']),
+				'download' => $url . $row['filename']
 			);
 		}
 	}
@@ -471,6 +619,17 @@ function EditOffer()
 
 	if (!isset($_POST['submit'])) return;
 
+	$extensions = array (
+		'jpg', 'jpeg',
+		'doc', 'docx',
+		'xls', 'xlsx',
+		'ppt', 'pptx',
+		'zip',
+		'pdf',
+		'rar',
+		'7z'
+	);
+
 	$errors = FormValidate($_POST, $data, array(
 		'lang' => array('req' => true, 'is' => 'int'),
 		'category' => array('req' => true, 'is' => 'int'),
@@ -495,12 +654,14 @@ function EditOffer()
 		}
 	}
 
+
+	// move to gallery and resize upload images
 	$resizes = GetOffersDirs();
 	reset($resizes);
 	$basePath = current($resizes);
 	$basePath = $basePath['path'];
-	$files = array();
-	$count = 0;
+	$pictures = array();
+	$picturesPount = 0;
 
 	if (isset($_FILES['pictures']) && count($_FILES['pictures'])) {
 		foreach ($_FILES['pictures']['error'] as $file => $error) {
@@ -508,7 +669,7 @@ function EditOffer()
 				continue;
 			}
 
-			$count++;
+			$picturesPount++;
 
 			$uploaded = $_FILES['pictures']['tmp_name'][$file];
 			$name = $_FILES['pictures']['name'][$file];
@@ -535,7 +696,7 @@ function EditOffer()
 					$paths[$image['name']] = $image['location'];
 				}
 
-				$files[] = array (
+				$pictures[] = array (
 					'filename' => $filename,
 					'path' => $paths
 				);
@@ -547,8 +708,57 @@ function EditOffer()
 		}
 	}
 
-	if ($count && !count($files)) {
+	if ($picturesPount && !count($pictures)) {
 		$errors['pictures'] = 'Възникна грешка с всички качени снимки!';
+	}
+
+	// Move to upload/ dir all uploaded attachments
+	$basePath = FixPathName(BASE_PATH . CFG('upload.dir.attachments'));
+	$attachments = array();
+	$attachmentsCount = 0;
+
+	if (isset($_FILES['attachments']) && count($_FILES['attachments'])) {
+		CreateDirPath($basePath);
+
+		foreach ($_FILES['attachments']['error'] as $file => $error) {
+			$mime =  mb_strtolower($_FILES['attachments']['type'][$file]);
+
+			// upload error or not allowed mime type
+			if ($error !== UPLOAD_ERR_OK) {
+				continue;
+			}
+
+			$attachmentsCount++;
+
+			$uploaded = $_FILES['attachments']['tmp_name'][$file];
+			$name = $_FILES['attachments']['name'][$file];
+			$filename = GetValidFilename($basePath, $name);
+			$ext = $filename['ext'];
+			$filename = $filename['filename'];
+
+			if (!in_array($ext, $extensions)) {
+				continue;
+			}
+
+			try {
+				if (!@move_uploaded_file($uploaded, $basePath . $filename)) {
+					throw new Exception("Can't move uploaded file!");
+				}
+
+				$attachments[] = array (
+					'filename' => $filename,
+					'size' => filesize($basePath . $filename),
+					'path' => $basePath
+				);
+			} catch(Exception $e) {
+				@unlink($basePath . $filename);
+				@unlink($uploaded);
+			}
+		}
+	}
+
+	if ($attachmentsCount && !count($attachments)) {
+		$errors['attachments'] = 'Възникна грешка с всички прикачени файлове!';
 	}
 
 	if (count($errors) > 0) {
@@ -556,12 +766,19 @@ function EditOffer()
 		$skin->assign('RESULT', $data);
 		$skin->assign('ERRORS', $errors);
 
-		if (count($files)) {
-			foreach ($files as $file) {
+		if (count($pictures)) {
+			// delete uploaded images
+			foreach ($pictures as $file) {
 				foreach ($file['path'] as $path) {
 					@unlink(BASE_PATH . $path . $file['filename']);
 					DeleteEmptyTree(BASE_PATH . $path);
 				}
+			}
+
+			// delete uploaded attachments
+			foreach ($attachments as $file) {
+				@unlink($file['path'] . $file['filename']);
+				DeleteEmptyTree($file['path']);
 			}
 		}
 		return;
@@ -585,12 +802,19 @@ function EditOffer()
 		$skin->assign('ERROR', $ml['L_ERROR_DB_QUERY']);
 		$skin->assign('RESULT', $data);
 
-		if (count($files)) {
-			foreach ($files as $file) {
+		if (count($pictures)) {
+			// delete uploaded images
+			foreach ($pictures as $file) {
 				foreach ($file['path'] as $path) {
 					@unlink(BASE_PATH . $path . $file['filename']);
 					DeleteEmptyTree(BASE_PATH . $path);
 				}
+			}
+
+			// delete uploaded attachments
+			foreach ($attachments as $file) {
+				@unlink($file['path'] . $file['filename']);
+				DeleteEmptyTree($file['path']);
 			}
 		}
 		return;
@@ -621,10 +845,10 @@ function EditOffer()
 		$db->query($sql);
 	}
 
-	if (count($files)) {
+	if (count($pictures)) {
 		$values = '';
 
-		foreach ($files as $file) {
+		foreach ($pictures as $file) {
 			$values .= "(NULL, '".$id."', '";
 			$values .= $db->escapeString($file['filename']) . "', ";
 			$values .= 'NOW()), ';
@@ -641,6 +865,27 @@ function EditOffer()
 		$db->query($sql);
 	}
 
+	if (count($attachments)) {
+		$values = '';
+
+		foreach ($attachments as $file) {
+			$values .= "(NULL, '".$id."', '";
+			$values .= $db->escapeString($file['filename']) . "', '";
+			$values .= (int) $file['size'] . "', ";
+			$values .= 'NOW()), ';
+		}
+
+		$values = rtrim($values, ", ");
+
+		$sql = "INSERT INTO `".TABLE_OFFERS_FILES."` (
+				`id`,
+				`offer_id`,
+				`filename`,
+				`size`,
+				`date`
+			) VALUES ".$values;
+		$db->query($sql);
+	}
 
 	MsgPush('success', 'Успешно редактирана оферта!');
 	RedirectSite('admin/?page='.$page . '&action=edit&id=' . $id);
@@ -680,6 +925,23 @@ function DeleteOffer()
 		}
 
 		$sql = "DELETE FROM `".TABLE_OFFERS_PICTURES."`
+			WHERE `offer_id` = '".$id."'";
+		$db->query($sql);
+	}
+
+	// delete attachments
+	$sql = "SELECT `filename`
+		FROM `".TABLE_OFFERS_FILES."`
+		WHERE `offer_id` = '".$id."'";
+	if ($db->query($sql) && $db->getCount()) {
+		$path = FixPathName(BASE_PATH . CFG('upload.dir.attachments'));
+
+		while ($row = $db->getAssoc()) {
+			@unlink($path . $row['filename']);
+			DeleteEmptyTree($path);
+		}
+
+		$sql = "DELETE FROM `".TABLE_OFFERS_FILES."`
 			WHERE `offer_id` = '".$id."'";
 		$db->query($sql);
 	}

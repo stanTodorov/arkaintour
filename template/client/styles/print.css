@@ -11,7 +11,7 @@ body {
 #slideshow, #header, #content .top, #content .bottom,
 #sidebar, #suggestions, #footer .menu, #back, #nastech,
 #offer .facebook, #offer .options, #offer .summary .gallery,
-#query, #send-to-friend { display: none }
+#query, #send-to-friend, #offer .attachments { display: none }
 
 h1, h2, h3, h4, h5, h6, #main h2 { font-family: "Georgia","Times New Roman", serif }
 

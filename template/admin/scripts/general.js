@@ -168,12 +168,33 @@ $(document).ready(function() {
 	});
 
 	$("#addImage").on("click", function() {
-		var where = $(this).parents("tr").find("div.filesList:last");
-		var count = $(this).parents("tr").find("div.filesList").length + 1;
+		var where = $(this).parents("tr").find("div.images-list:last");
+		var count = $(this).parents("tr").find("div.images-list").length + 1;
 		var fields = '\
-			<div class="filesList">\
-				<input type="file" id="dpdf_' + count + '" name="pictures[]" value="" />\
-				<a class="icon removePicture" href="#"><span class="remove"></span></a>\
+			<div class="images-list">\
+				<div class="icon"><span class="photo"></span></div> \
+				<input type="file" id="dpdf_' + count + '" name="pictures[]" value="" /> \
+				<a class="icon removePicture" href="#"><span class="remove"></span></a> \
+			</div>';
+
+		if (count == 1) {
+			where = $(this).parents("tr").find("td");
+			$(where).html(fields);
+		} else {
+			$(where).after(fields);
+		}
+
+		return false;
+	});
+
+	$("#addFile").on("click", function() {
+		var where = $(this).parents("tr").find("div.files-list:last");
+		var count = $(this).parents("tr").find("div.files-list").length + 1;
+		var fields = '\
+			<div class="files-list"> \
+				<div class="icon"><span class="attachment"></span></div> \
+				<input type="file" id="dpdf_' + count + '" name="attachments[]" value="" /> \
+				<a class="icon removePicture" href="#"><span class="remove"></span></a> \
 			</div>';
 
 		if (count == 1) {
