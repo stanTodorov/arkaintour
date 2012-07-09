@@ -342,7 +342,7 @@ ul li {
 #content {
 	width: 935px;
 	margin: 0 auto 10px;
-	overflow: hidden;
+	/*overflow: hidden;*/
 	height: 100%;
 }
 
@@ -355,7 +355,7 @@ ul li {
 #content .content {
 	padding: 10px;
 	background: url('./../images/content-bg.png') top center repeat-y;
-	overflow: hidden;
+	/* overflow: hidden; */
 	height: 100%;
 }
 
