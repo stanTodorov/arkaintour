@@ -906,14 +906,13 @@ div.paging a {
 }
 
 div.paging a:hover {
-	border-color: #f80;
-	color: #f80;
+	border-color: #f00000;
 	text-decoration: none;
 }
 
 div.paging span {
 	padding: 3px 8px;
-	color: #ff8000;
+	color: #f00000;
 	border: 1px solid #0080ff;
 }
 
