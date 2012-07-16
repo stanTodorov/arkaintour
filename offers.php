@@ -67,7 +67,7 @@ function main($id, &$title)
 
 function ShowOffers($articleId, $category = 0, $url = '')
 {
-	global $db, $skin;
+	global $db, $skin, $page;
 
 	$articleId = (int) $articleId;
 	$category = (int) $category;
@@ -77,6 +77,36 @@ function ShowOffers($articleId, $category = 0, $url = '')
 	$skin->assign('OFFERS', true);
 
 	if (!$category) {
+		$count = 0;
+		$sql = "SELECT COUNT(*) AS 'count'
+			FROM (
+				`".TABLE_OFFERS."` o,
+				`".TABLE_CATEGORIES."` c,
+				`".TABLE_ARTICLES."` a,
+				`".TABLE_LANGUAGES."` l
+			)
+			LEFT JOIN `".TABLE_OFFERS_PICTURES."` p ON
+				p.`offer_id` = o.`id`
+			WHERE
+				c.`id` = o.`category_id`
+				AND a.`id` = c.`article_id`
+				AND a.`id` = '".$articleId."'
+				AND o.`lang_id` = l.`id`
+				AND l.`locale` = '".$db->escapeString(CFG('locale'))."'
+			GROUP BY o.`id`
+			ORDER BY o.`vip_offer` DESC, o.`added` ASC";
+		if (!$db->query($sql) || !($count = $db->getCount())) {
+			return;
+		}
+
+		unset($_GET['locale']);
+		unset($_GET['page']);
+		$url = BASE_URL . CFG('locale') . '/' . $page . '/';
+		$paging = new Paging($count, CFG('paging.count.categories'), $url, "pg", true, true, true);
+		$paging->grouping = CFG('paging.groups');
+		$skin->assign('PAGING', $paging->ShowNavigation());
+		$skin->assign('COUNT', $count);
+
 		$sql = "SELECT
 				c.`id` AS 'category',
 				a.`url`,
@@ -101,8 +131,7 @@ function ShowOffers($articleId, $category = 0, $url = '')
 				AND l.`locale` = '".$db->escapeString(CFG('locale'))."'
 			GROUP BY o.`id`
 			ORDER BY o.`vip_offer` DESC, o.`added` ASC
-			LIMIT 6
-		";
+		".$paging->GetMysqlLimits();
 		if (!$db->query($sql) || !$db->getCount()) {
 			return '';
 		}
@@ -142,9 +171,10 @@ function ShowOffers($articleId, $category = 0, $url = '')
 		return;
 	}
 
-	CFG('paging.count', 1);
-
-	$paging = new Paging($count, CFG('paging.count'), BASE_URL, "pg", true, true, true);
+	unset($_GET['locale']);
+	unset($_GET['page']);
+	$url = BASE_URL . CFG('locale') . '/' . $page . '/' . $category . '/' ;
+	$paging = new Paging($count, CFG('paging.count.categories'), $url, "pg", true, true, true);
 	$paging->grouping = CFG('paging.groups');
 	$skin->assign('PAGING', $paging->ShowNavigation());
 	$skin->assign('COUNT', $count);

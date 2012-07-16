@@ -37,7 +37,38 @@ function main($id, &$title)
 
 function GetTopOffers()
 {
-	global $db, $skin, $uri;
+	global $db, $skin, $uri, $page;
+
+
+	$count = 0;
+	$sql = "SELECT
+			COUNT(*) AS 'count'
+		FROM (
+			`".TABLE_OFFERS."` o,
+			`".TABLE_CATEGORIES."` c,
+			`".TABLE_ARTICLES."` a,
+			`".TABLE_LANGUAGES."` l
+		)
+		LEFT JOIN `".TABLE_OFFERS_PICTURES."` p ON
+			p.`offer_id` = o.`id`
+		WHERE
+			o.`vip_offer` = '1'
+			AND c.`id` = o.`category_id`
+			AND a.`id` = c.`article_id`
+			AND o.`lang_id` = l.`id`
+			AND l.`locale` = '".$db->escapeString(CFG('locale'))."'
+		GROUP BY o.`id`";
+	if (!$db->query($sql) || !($count = $db->getCount())) {
+		return;
+	}
+
+	unset($_GET['locale']);
+	unset($_GET['page']);
+	$url = BASE_URL . CFG('locale') . '/' . $page . '/';
+	$paging = new Paging($count, CFG('paging.count.vip'), $url, "pg", true, true, true);
+	$paging->grouping = CFG('paging.groups');
+	$skin->assign('PAGING', $paging->ShowNavigation());
+	$skin->assign('COUNT', $count);
 
 	$sql = "SELECT
 			c.`id` AS 'category',
@@ -62,7 +93,8 @@ function GetTopOffers()
 			AND o.`lang_id` = l.`id`
 			AND l.`locale` = '".$db->escapeString(CFG('locale'))."'
 		GROUP BY o.`id`
-		ORDER BY o.`added` ASC";
+		ORDER BY o.`added` DESC
+	".$paging->GetMysqlLimits();
 	if (!$db->query($sql) || !$db->getCount()) {
 		return '';
 	}

@@ -3,10 +3,11 @@ if (!defined('PROGRAM') || PROGRAM !== 1) exit;
 
 function main(&$title)
 {
-	global $db, $skin, $uri;
+	global $db, $skin, $uri, $page;
 	$skin->assign('PAGE', 'search');
 
 	if (isset($_POST['q'])) {
+		$_POST['q'] = preg_replace('/[\/]+/', '', $_POST['q']);
 		RedirectSite(__('търсене') . '/' . urlencode($_POST['q']));
 	}
 
@@ -19,7 +20,8 @@ function main(&$title)
 
 	$q = preg_replace('/[^\w -_\p{L}]+/iu', '', $q);
 
-	$skin->assign('SEARCH', $q);
+	$search = $q;
+	$skin->assign('SEARCH', $search);
 
 	$skin->assign('L_SEARCH', sprintf(__('Резултати от търсенето на „%s“'), $q));
 
@@ -58,6 +60,53 @@ function main(&$title)
 	$dateStart = date("Y-m-d H:i:s", $today);
 	$dateEnd = date("Y-m-d H:i:s", strtotime("+2 year", $today));
 	$offers = array();
+
+
+	$count = 0;
+	$sql = "SELECT
+			COUNT(*) AS 'count'
+		FROM (
+			`".TABLE_OFFERS."` o,
+			`".TABLE_CATEGORIES."` c,
+			`".TABLE_ARTICLES."` a,
+			`".TABLE_LANGUAGES."` l
+		)
+
+		LEFT JOIN `".TABLE_OFFERS_PERIODS."` hasOp ON
+			hasOp.`offer_id` = o.`id`
+
+		LEFT JOIN `".TABLE_OFFERS_PERIODS."` op ON
+			op.`offer_id` = o.`id`
+			AND op.`date` BETWEEN '".$dateStart."' AND '".$dateEnd."'
+
+		LEFT JOIN `".TABLE_OFFERS_PICTURES."` p ON
+			p.`offer_id` = o.`id`
+
+		WHERE
+			c.`id` = o.`category_id`
+			AND c.`article_id` = a.`id`
+			AND MATCH(o.`name`, o.`route`, o.`content`, o.`transport`, o.`price`, c.`title`)
+			    AGAINST('".$db->EscapeString($q)."* ' IN BOOLEAN MODE)
+			AND (
+				hasOp.`id` IS NULL
+				OR op.`id` IS NOT NULL
+			)
+			AND a.`lang_id` = l.`id`
+			AND l.`locale` = '".$db->escapeString(CFG('locale'))."'
+		GROUP BY o.`id`
+		ORDER BY o.`vip_offer` DESC, a.`order` ASC
+	";
+	if (!$db->query($sql) || !($count = $db->getCount())) {
+		return;
+	}
+
+	unset($_GET['locale']);
+	unset($_GET['page']);
+	$url = BASE_URL . $page . '/' . $search . '/';
+	$paging = new Paging($count, CFG('paging.count.search'), $url, "pg", true, true, true);
+	$paging->grouping = CFG('paging.groups');
+	$skin->assign('PAGING', $paging->ShowNavigation());
+	$skin->assign('COUNT', $count);
 
 	$sql = "SELECT
 			o.`id`,
@@ -99,9 +148,7 @@ function main(&$title)
 		ORDER BY
 			o.`vip_offer` DESC,
 			a.`order` ASC
-		LIMIT 25
-	";
-
+	".$paging->GetMysqlLimits();
 	if ($db->query($sql) && $db->getCount()) {
 		$resizes = GetOffersDirs();
 

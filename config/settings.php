@@ -23,6 +23,9 @@ $cfg['login.lostpass.timeout'] = 86400; // 24 h
 // paging
 $cfg['paging.count'] = 25;
 $cfg['paging.groups'] = 7;
+$cfg['paging.count.vip'] = 6;
+$cfg['paging.count.categories'] = 8;
+$cfg['paging.count.search'] = 8;
 
 // smarty template engine
 $cfg['smarty.skin'] = '';
@@ -37,7 +40,6 @@ $cfg['upload.img.names'] = 'normal,small';
 $cfg['upload.img.dir'] = ',96x96';
 $cfg['upload.img.size'] = '1600,96';
 $cfg['upload.img.quality'] = '100,86';
-
 
 // smtp mail settings
 $cfg['smtp.hostname'] = 'nasbg.com';

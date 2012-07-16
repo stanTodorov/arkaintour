@@ -63,7 +63,7 @@
 			{if $OFFER.pictures}
 			<div class="gallery">
 				<ul>
-				{section name=i loop=$OFFER.pictures}
+				{section name=i loop=$OFFER.pictures step=-1}
 					<li>
 						<a class="zoom" data-fancybox-group="true" href="{$OFFER.pictures[i].image}">
 							<img src="{$OFFER.pictures[i].thumb}" alt="" title="" />
