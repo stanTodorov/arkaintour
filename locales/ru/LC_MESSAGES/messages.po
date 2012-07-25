@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-06-29 16:27+0300\n"
-"PO-Revision-Date: 2012-07-09 12:28+0200\n"
+"PO-Revision-Date: 2012-07-25 13:19+0200\n"
 "Last-Translator: Миалий <mialygk@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -379,7 +379,7 @@ msgstr "Назад"
 #: ../../template/client/article.html:83
 #: ../../template/client/article.html:93
 msgid "Запитване за оферта"
-msgstr "Запрос предложения"
+msgstr "Отправьте нам сообщение"
 
 #: ../../template/client/article.html:20
 #: ../../template/client/article.html:84
@@ -453,7 +453,7 @@ msgstr "Отправлять"
 #: ../../template/client/home.html:15
 #: ../../template/client/search.html:32
 msgid "Към офертата"
-msgstr "Показать предлагать"
+msgstr "Подробнее"
 
 #: ../../template/client/contacts.html:1
 msgid "Вашите въпроси"
