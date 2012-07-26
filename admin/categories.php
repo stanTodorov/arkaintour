@@ -35,6 +35,26 @@ function AddCategory()
 	$lang = isset($_SESSION['lang']) ? (int) $_SESSION['lang'] : 0;
 	$lang = isset($_POST['lang']) ? (int) $_POST['lang'] : $lang;
 
+	$baseUrl = BASE_URL . CFG('upload.dir.icons') . DS;
+
+	// get icons
+	$icons = array();
+	$sql = "SELECT
+			`id`,
+			`filename`
+		FROM `".TABLE_ICONS."`
+		ORDER BY `added` DESC";
+	if ($db->query($sql) && $db->getCount()) {
+		while ($row = $db->getAssoc()) {
+			$row['image'] = $baseUrl . $row['filename'];
+			$icons[] = array(
+				'id' => $row['id'],
+				'image' => $row['image']
+			);
+		}
+	}
+	$skin->assign('ICONS', $icons);
+
 	// get All languages
 	$sql = "SELECT
 			`id`,
@@ -96,6 +116,7 @@ function AddCategory()
 	$errors = FormValidate($_POST, $data, array(
 		'page' => array('req' => true, 'is' => 'int'),
 		'lang' => array('req' => true, 'is' => 'int'),
+		'icon' => array('req' => true, 'is' => 'int'),
 		'name' => array('req' => true, 'min' => 1, 'max' => 256)
 	));
 
@@ -125,6 +146,7 @@ function AddCategory()
 			`id`,
 			`lang_id`,
 			`article_id`,
+			`icon_id`,
 			`title`,
 			`order`,
 			`added`,
@@ -135,6 +157,7 @@ function AddCategory()
 			NULL,
 			'".$data['lang']."',
 			'".$data['page']."',
+			'".$data['icon']."',
 			'".$db->escapeString($data['name'])."',
 			'".$order."',
 			NOW(),
@@ -165,6 +188,26 @@ function EditCategory()
 		RedirectSite('admin/?page=' . $page);
 	}
 
+	$baseUrl = BASE_URL . CFG('upload.dir.icons') . DS;
+
+	// get icons
+	$icons = array();
+	$sql = "SELECT
+			`id`,
+			`filename`
+		FROM `".TABLE_ICONS."`
+		ORDER BY `added` DESC";
+	if ($db->query($sql) && $db->getCount()) {
+		while ($row = $db->getAssoc()) {
+			$row['image'] = $baseUrl . $row['filename'];
+			$icons[] = array(
+				'id' => $row['id'],
+				'image' => $row['image']
+			);
+		}
+	}
+	$skin->assign('ICONS', $icons);
+
 	// get All languages
 	$sql = "SELECT
 			`id`,
@@ -183,6 +226,7 @@ function EditCategory()
 
 	// check for category
 	$sql = "SELECT
+			`icon_id` AS 'icon',
 			`article_id` AS 'page',
 			`title` AS 'name',
 			`lang_id` AS 'lang',
@@ -238,6 +282,7 @@ function EditCategory()
 
 	$errors = FormValidate($_POST, $data, array(
 		'page' => array('req' => true, 'is' => 'int'),
+		'icon' => array('req' => true, 'is' => 'int'),
 		'name' => array('req' => true, 'min' => 1, 'max' => 256),
 		'lang' => array('req' => true, 'is' => 'int')
 	));
@@ -273,6 +318,7 @@ function EditCategory()
 	// edit category
 	$sql = "UPDATE `".TABLE_CATEGORIES."`
 		SET
+			`icon_id` = '".$data['icon']."',
 			`lang_id` = '".$data['lang']."',
 			`article_id` = '".$data['page']."',
 			`title` = '".$db->escapeString($data['name'])."',
@@ -580,13 +626,20 @@ function ListCategories()
 	$skin->assign('PAGING', $paging->ShowNavigation());
 	$skin->assign('COUNT', $count);
 
+	$baseURL = BASE_URL . CFG('upload.dir.icons') . DS;
+
 	$sql = "SELECT
 			c.`id`,
 			c.`title` AS 'name',
 			a.`title` AS 'article',
 			UNIX_TIMESTAMP(c.`added`) AS 'added',
-			UNIX_TIMESTAMP(c.`modified`) AS 'modified'
+			UNIX_TIMESTAMP(c.`modified`) AS 'modified',
+			i.`filename`
 		FROM `".TABLE_CATEGORIES."` c
+
+		LEFT JOIN `".TABLE_ICONS."` i ON
+			i.`id` = c.`icon_id`
+
 		LEFT JOIN `".TABLE_ARTICLES."` a ON
 			a.`id` = c.`article_id`
 		".$where."
@@ -604,6 +657,11 @@ function ListCategories()
 
 		$row['modified'] = LocaleDate('d.m.Y H:i', $row['modified']);
 		$row['added'] = LocaleDate('d.m.Y H:i', $row['added']);
+
+		$row['image'] = false;
+		if ($row['filename']) {
+			$row['image'] = $baseURL . $row['filename'];
+		}
 
 		$result[] = $row;
 	}

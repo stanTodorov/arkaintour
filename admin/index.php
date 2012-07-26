@@ -23,6 +23,7 @@ $pages = array (
 	'settings',
 	'profile',
 	'offers',
+	'icons',
 	'ajax'
 );
 

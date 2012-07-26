@@ -66,7 +66,10 @@
 	{section name=i loop=$RESULT}
 		<tr {if $RESULT[i].odd} class="odd" {/if}>
 			<td>&nbsp;{$RESULT[i].nr}</td>
-			<td>{$RESULT[i].name}</td>
+			<td>
+				{if $RESULT[i].image}<img src="{$RESULT[i].image}" alt="" title="" />{/if}
+				{$RESULT[i].name}
+			</td>
 			<td>{$RESULT[i].article}</td>
 			<td class="center">{$RESULT[i].added}</td>
 			<td class="center">

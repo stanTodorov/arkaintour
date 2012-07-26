@@ -12,7 +12,7 @@
 
 		<meta property="og:title" content="{$TITLE}" />
 		{if $DESCRIPTION}<meta property="og:description" content="{$DESCRIPTION}" />{/if}
-		<meta property="og:url" content="{$URL}" />
+		<meta property="og:url" content="{if $OFFER.url}{$OFFER.url}{else}{$URL}{/if}" />
 		<meta property="og:site_name" content="DressBOX" />
 
 		<meta property="og:image" content="{$IMG}facebook-logo.png" />
@@ -36,7 +36,7 @@
 					</ul>
 
 					<div id="facebook-page">
-						<div class="fb-like" data-href="http://bg-bg.facebook.com/pages/ARKAIN-TOUR/270066048749" data-send="false" data-layout="button_count" data-width="250" data-show-faces="false"></div>
+						<div class="fb-like" data-href="http://www.facebook.com/pages/ARKAIN-TOUR/270066048749" data-send="false" data-layout="button_count" data-width="250" data-show-faces="false"></div>
 					</div>
 
 					<ul id="menu">
@@ -95,12 +95,14 @@
 						<div id="sidebar">
 						{if $SIDEBAR}
 							<h2>{tr}Категории{/tr}</h2>
-
-							<ul id="categories">
+							<table id="categories">
 							{section name=i loop=$SIDEBAR}
-								<li><a href="{$SIDEBAR[i].url}">{$SIDEBAR[i].name|escape}</a></li>
+								<tr>
+									<td class="icon">{if $SIDEBAR[i].icon}<img src="{$SIDEBAR[i].icon}" alt="" />{else}&nbsp;{/if}</td>
+									<td class="name"><a href="{$SIDEBAR[i].url}">{$SIDEBAR[i].name|escape}</a></td>
+								</tr>
 							{/section}
-							</ul>
+							</table>
 						{/if}
 						</div>
 
@@ -118,7 +120,7 @@
 				</div>
 
 				{if $LANG eq 'ru'}
-				<a href="http://www.yandex.ru/" id="banner-russia"></a>
+				<a href="http://arkaintour.com/ru_RU/недвижимость" id="banner"><img src="{$IMG}ads/banner.jpg" alt="" title="" /></a>
 
 				{/if}
 
@@ -202,7 +204,7 @@
 		{if NOT $DEBUG}
 		<script type="text/javascript">
 			var _gaq = _gaq || [];
-			_gaq.push(['_setAccount', 'UA-30024348-1']);
+			_gaq.push(['_setAccount', 'UA-33043560-1']);
 			_gaq.push(['_trackPageview']);
 
 			(function() {

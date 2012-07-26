@@ -7,6 +7,8 @@ function main($id, &$title)
 	$skin->assign('PAGE', 'article');
 	$id = (int) $id;
 
+	$baseURL = BASE_URL . CFG('upload.dir.icons') . DS;
+
 	$sql = "SELECT
 			`title`,
 			`show_title`,
@@ -32,18 +34,28 @@ function main($id, &$title)
 
 	// get subcategories
 	$sql = "SELECT
-			`id`,
-			`title`
-		FROM `".TABLE_CATEGORIES."`
-		WHERE `article_id` = '".$id."'
-		ORDER BY `order` ASC";
+			c.`id`,
+			c.`title`,
+			i.`filename`
+		FROM `".TABLE_CATEGORIES."` c
+		LEFT JOIN `".TABLE_ICONS."` i ON
+			i.`id` = c.`icon_id`
+		WHERE c.`article_id` = '".$id."'
+		ORDER BY c.`order` ASC";
 	if ($db->query($sql) && $db->getCount()) {
 		$sidebar = array();
 		while ($row = $db->getAssoc()) {
 			$row['url'] = BASE_URL . CFG('locale') . '/' . $article['url'] . '/' . $row['id'];
+
+			$row['image'] = false;
+			if ($row['filename']) {
+				$row['image'] = $baseURL . $row['filename'];
+			}
+
 			$sidebar[] = array(
 				'url' => $row['url'],
-				'name' => $row['title']
+				'name' => $row['title'],
+				'icon' => $row['image']
 			);
 		}
 

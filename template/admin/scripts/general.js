@@ -279,6 +279,17 @@ $(document).ready(function() {
 		});
 	});
 
+	$("#icons-list a").click(function() {
+		var $val = $("#icons-list-select");
+		var id = parseInt($(this).attr("data-id"), 10);
+
+		$("#icons-list a").removeClass("selected");
+		$(this).addClass("selected");
+
+		$val.val(id);
+		return false;
+	});
+
 	$("textarea.tinymce").tinymce({
 		script_url: URL.js + "TinyMCE/tiny_mce.js",
 		content_css: URL.css + "TinyMCE.css",

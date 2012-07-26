@@ -31,6 +31,23 @@
 				{if $ERRORS.name}<div class="small-error">{$ERRORS.name}</div>{/if}
 			</td>
 		</tr>
+		<tr>
+			<th class="top">Икона</th>
+			<td>
+				<div id="icons-list">
+					<a class="icon empty {if NOT $RESULT.icon}selected{/if}" href="#" data-id="0"></a>
+				{section name=i loop=$ICONS}
+					<a class="icon {if $RESULT.icon eq $ICONS[i].id}selected{/if}" href="#" data-id="{$ICONS[i].id}">
+						<img src="{$ICONS[i].image}" alt="" title=""/>
+					</a>
+				{/section}
+				</div>
+
+				<input type="hidden" name="icon" value="{$RESULT.icon}" id="icons-list-select" />
+
+				{if $ERRORS.page}<div class="small-error">{$ERRORS.page}</div>{/if}
+			</td>
+		</tr>
 	</table>
 
 	<div class="buttons">

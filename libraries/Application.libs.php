@@ -580,15 +580,23 @@ function LoadSideBarItems()
 
 	$sidebar = array();
 
+	$baseURL = BASE_URL . CFG('upload.dir.icons') . DS;
+
 	// get all subcategories
 	$sql = "SELECT
 			a.`url`,
 			c.`id`,
-			c.`title`
-		FROM
+			c.`title`,
+			i.`filename`
+		FROM (
 			`".TABLE_ARTICLES."` a,
 			`".TABLE_CATEGORIES."` c,
 			`".TABLE_LANGUAGES."` l
+		)
+
+		LEFT JOIN `".TABLE_ICONS."` i ON
+			i.`id` = c.`icon_id`
+
 		WHERE
 			a.`id` = c.`article_id`
 			AND c.`lang_id` = l.`id`
@@ -598,9 +606,16 @@ function LoadSideBarItems()
 	if ($db->query($sql) && $db->getCount()) {
 		while ($row = $db->getAssoc()) {
 			$row['url'] = BASE_URL . CFG('locale') . '/' . $row['url'] . '/' . $row['id'];
+
+			$row['image'] = false;
+			if ($row['filename']) {
+				$row['image'] = $baseURL . $row['filename'];
+			}
+
 			$sidebar[] = array(
 				'url' => $row['url'],
-				'name' => $row['title']
+				'name' => $row['title'],
+				'icon' => $row['image']
 			);
 		}
 	}

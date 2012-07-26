@@ -1,0 +1,27 @@
+<h2>Добавяне на икони</h2>
+
+<form method="post" enctype="multipart/form-data" action="{$URL}admin/?page={$PAGE}&amp;action=add">
+	<table class="layout" style="width: 700px">
+		<tr>
+			<th class="top">Икона (<a id="addImage" class="icon" href="#" title="Добавяне на ново поле"><span class="add no-text"></span></a>)</th>
+			<td>
+				<div class="images-list">
+					<div class="icon"><span class="photo"></span></div> <input type="file" name="pictures[]" />
+				</div>
+				{if $ERRORS.pictures}<div class="small-error">{$ERRORS.pictures}</div>{/if}
+			</td>
+		</tr>
+		<tr>
+			<th>&nbsp;</th>
+			<td>
+				Максимален разбер на качените файлове: <strong>{$MAX_UPLOAD_SIZE}</strong><br />
+				Размер на иконите в пиксели: <strong>32x32</strong><br >
+				Разрешени формати: <strong>GIF, PNG, JPG</strong>
+			</td>
+		</tr>
+	</table>
+
+	<div class="buttons">
+		<span class="button"><button type="submit" name="submit">Добавяне</button></span>
+	</div>
+</form>

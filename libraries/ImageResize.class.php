@@ -232,6 +232,22 @@ class ImageResize {
 			break;
 		}
 	}
+	
+	/** 
+	 * Get Width and Height of image as array
+	 * 
+	 * return array ('width' => width, 'height' => height)
+	 */
+	public function getDimensions() 
+	{
+		return array(
+			0 => $this->_width,
+			1 => $this->_height,
+			'width' => $this->_width,
+			'height' => $this->_height
+		);
+	
+	}
 
 	/**
 	 * Open Image file

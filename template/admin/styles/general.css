@@ -1281,3 +1281,91 @@ span.button {
 .files li {
 	margin: 1px 2px 2px;
 }
+
+
+ul.album-gallery {
+	list-style: none outside none;
+	margin: 15px 5px;
+	overflow: hidden;
+	width: 100%;
+}
+
+ul.album-gallery li {
+	display: inline-block;
+	float: left;
+	width: 100px;
+	margin: 5px;
+	padding: 15px 5px 5px;
+	position: relative;
+	text-align: center;
+	border: 1px solid #888;
+}
+
+ul.album-gallery li.active { background: #777 }
+ul.album-gallery li:hover { background: #ccc }
+
+
+ul.album-gallery li label {
+	font-size: 0.8em;
+	font-family: "Arial", "Verdana", sans-serif;
+	display: block;
+	margin: 5px 0 2px 0;
+}
+
+ul.album-gallery li a.remove {
+	position: absolute;
+	width: 18px;
+	height: 18px;
+	background: url('./../images/delete.png') center no-repeat;
+	top: 2px;
+	right: 2px;
+}
+
+ul.album-gallery li span.date {
+	font-size: 0.6em;
+	line-height: normal;
+	display: block;
+	margin-top: 10px;
+}
+
+span.image {
+	background: #fff center no-repeat;
+	border: 1px solid #fff;
+	display: inline-block;
+	height: 32px;
+	vertical-align: middle;
+	width: 32px;
+	padding: 5px;
+}
+
+ul.album-gallery li:hover span.image {
+	background-color: #888;
+	border-top: 1px solid #666;
+	border-left: 1px solid #666;
+}
+
+#icons-list {
+	height: 106px;
+	overflow: auto;
+}
+
+#icons-list .icon {
+	display: block;
+	float: left;
+	border: 1px dotted #fff;
+	margin: 2px;
+}
+
+#icons-list .icon:hover {
+	border-color: #666;
+}
+
+#icons-list .icon.empty {
+	width: 32px;
+	height: 32px;
+}
+
+#icons-list .icon.selected {
+	background: lightblue;
+	border: 1px solid blue;
+}

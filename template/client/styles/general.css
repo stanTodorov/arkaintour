@@ -523,24 +523,34 @@ ul.offers li .more a:hover {
 }
 
 #categories {
-	list-style: none inside;
+	border-collapse: collapse;
 	margin: 0 auto 20px;
+	width: 100%;
 }
 
-#categories li {
+#categories td {
 	margin: 5px 0;
-	text-indent: 10px;
 	font-size: 0.9em;
+	vertical-align: middle;
 }
 
-#categories li a {
+#categories td.icon {
+	height: 48px;
+	padding-left: 2px;
+	text-align: left;
+	width: 39px;
+}
+
+#categories td a {
 	color: #666;
 	text-decoration: none;
 	display: block;
 	padding: 5px 0;
+	height: 100%;
+	overflow: hidden;
 }
 
-#categories li a:hover {
+#categories td a:hover {
 	color: #000;
 }
 
@@ -916,11 +926,10 @@ div.paging span {
 	border: 1px solid #0080ff;
 }
 
-#banner-russia {
-	background: url('./../images/ads/banner.png') center no-repeat;
-	height: 60px;
+#banner {
 	width: 100%;
 	display: block;
 	margin: 0 0 15px;
+	text-align: center;
 }
 

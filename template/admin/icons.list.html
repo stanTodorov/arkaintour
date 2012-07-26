@@ -1,0 +1,23 @@
+<h2>Списък на Икони (<a class="icon" href="{$URL}admin?page={$PAGE}&amp;action=add&amp;id={$ALBUM.id}" title="Добавяне на нови икони" ><span class="add no-text"></span></a>)
+</h2>
+
+{if $RESULT}
+	<ul class="album-gallery" style="width: 760px; margin: 20px auto;">
+	{section name=i loop=$RESULT}
+		<li {if $RESULT[i].checked}class="active"{/if}>
+			<span class="image" style="background-image: url('{$RESULT[i].image}')"></span>
+
+			<a class="icon remove" data-warning="true" href="{$URL}admin/?page={$PAGE}&amp;action=remove&amp;id={$RESULT[i].id}&amp;token={$TOKEN}" title="Премахване на снимката"><span class="remove"></span></a>
+			
+			<span class="date">{$RESULT[i].date}</span>
+		</li>
+	{/section}
+	</ul>
+	
+	<p style="font-size: 0.8em">Общо: {$COUNT}</p>
+{else}
+
+	<div class="empty-album-gallery">Няма намерени икони!</div>
+
+{/if}
+
