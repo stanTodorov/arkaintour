@@ -43,9 +43,9 @@
 				{/section}
 				</div>
 
-				<input type="hidden" name="icon" value="{$RESULT.icon}" id="icons-list-select" />
+				<input type="hidden" name="icon" value="{$RESULT.icon|default:'0'}" id="icons-list-select" />
 
-				{if $ERRORS.page}<div class="small-error">{$ERRORS.page}</div>{/if}
+				{if $ERRORS.icon}<div class="small-error">{$ERRORS.icon}</div>{/if}
 			</td>
 		</tr>
 	</table>
