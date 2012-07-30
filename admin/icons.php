@@ -87,6 +87,10 @@ function AddIcons()
 		MsgPush('error', 'Възникна грешка при качване на иконите!');
 		RedirectSite('admin/?page=' . $page);
 	}
+	else if (!$picturesCount) {
+		MsgPush('error', 'Възникна грешка при качване на иконите!');
+		RedirectSite('admin/?page=' . $page);
+	}
 
 	$values = '';
 
@@ -112,7 +116,7 @@ function AddIcons()
 			}
 		}
 
-		MsgPush('error', 'Възникна грешка при качване на иконите!' . mysql_error());
+		MsgPush('error', 'Възникна грешка при качване на иконите!');
 		RedirectSite('admin/?page=' . $page);
 	}
 

@@ -64,7 +64,7 @@ function GetTopOffers()
 
 	unset($_GET['locale']);
 	unset($_GET['page']);
-	$url = BASE_URL . CFG('locale') . '/' . $page . '/';
+	$url = BASE_URL . CFG('locale') . '/';
 	$paging = new Paging($count, CFG('paging.count.vip'), $url, "pg", true, true, true);
 	$paging->grouping = CFG('paging.groups');
 	$skin->assign('PAGING', $paging->ShowNavigation());
