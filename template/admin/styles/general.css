@@ -375,10 +375,18 @@ input.submit:hover {
 	color: #08f;
 }
 
-input.text {
+input.text, input.datepicker {
 	width: 100%;
 	padding: 2px 0;
 	border: 1px solid #aaa;
+}
+
+input.text.small {
+	width: 50%;
+}
+
+input.datepicker {
+	width: 150px;
 }
 
 select.text { width: 100% }
@@ -1238,7 +1246,7 @@ span.button {
 
 .dateRange {
 	margin: 2px 0;
-	padding: 2px;
+	padding: 2px 0;
 }
 
 

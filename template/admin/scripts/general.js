@@ -124,6 +124,20 @@ $(document).ready(function() {
 		$.preLoadImages($(this).attr("data-url"));
 	});
 
+	$("#insertCurrency button").on("click", function() {
+		var price = $("#insertCurrency").parent().find("input[type=text]");
+		var sign = $(this).attr("data-sign");
+		var prefix = ($(this).attr("data-prefix") === "true") ? true : false;
+		var val = price.val().replace(/^\s+|\s+$/g, ""); // trim spaces
+
+		if (prefix) {
+			price.val(sign + " " + val).focus();
+			return;
+		}
+
+		price.val(val + " " + sign).focus();
+	});
+
 	$("span.showThumb").on("hover", function(e) {
 		var img = $(this).attr("data-url");
 		if ($("#thumb-box").length == 0) {

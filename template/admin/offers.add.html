@@ -75,7 +75,13 @@
 		<tr>
 			<th>Цена</th>
 			<td>
-				<input type="text" class="text" name="price" value="{$RESULT.price|escape}" />
+				<input type="text" class="text small" name="price" value="{$RESULT.price|escape}" />
+				<span id="insertCurrency">
+					<button type="button" name="euro" class="hint" title="Добави знак за Евро в края на полето" data-sign="€" data-prefix="false">€</button>
+					<button type="button" name="lev" class="hint" title="Добави знак за Лева в края на полето" data-sign="лв." data-prefix="false">лв.</button>
+					<button type="button" name="dollar" class="hint" title="Добави знак за Щатски долар в началото на полето" data-sign="$" data-prefix="true">$</button>
+					<button type="button" name="pound" class="hint" title="Добави знак за Британска лира в началото на полето" data-sign="£" data-prefix="true">£</button>
+				</span>
 				{if $ERRORS.price}<div class="small-error">{$ERRORS.price}</div>{/if}
 			</td>
 		</tr>
@@ -103,7 +109,7 @@
 				<ul style="margin: 10px 25px">
 					<li>DOC, DOCX (Word);</li>
 					<li>XLS, XLSX (Excel);</li>
-					<li>PPT, PPTX (PowerPoint);</li></div>
+					<li>PPT, PPTX (PowerPoint);</li>
 					<li>PDF</li>
 					<li>ZIP</li>
 					<li>RAR</li>
