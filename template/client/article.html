@@ -3,10 +3,10 @@
 
 	<div id="offer">
 		<div class="heading {if $OFFER.top_offer}top-offer{/if}">
-			<h2 class="name">{$OFFER.category|escape}</h2>
+			<h2 class="name {if $NEW_YEAR}new_year{/if}">{$OFFER.category|escape}</h2>
 			<h3>{$OFFER.name|escape}</h3>
 			<div class="price">{$OFFER.price|escape}</div>
-			{if $BACK}<a href="{$BACK}" id="back">{tr}Назад{/tr}</a>{/if}
+			{if $BACK}<a href="{$BACK}" id="back" class="{if $NEW_YEAR}new_year{/if}">{tr}Назад{/tr}</a>{/if}
 
 			<div class="facebook">
 				<div class="fb-like" data-href="{$OFFER.url}" data-send="false" data-layout="button_count" data-width="123" data-show-faces="false"></div>
@@ -176,11 +176,13 @@
 				</div>
 			</form>
 		</div>
+		
+		
 
 		<div class="clear"></div>
 	</div>
 {else if $OFFERS}
-	<h2>{$SECTION|escape}</h2>
+	<h2 class="{if $NEW_YEAR}new_year{/if}">{$SECTION|escape}</h2>
 	{$CONTENT}
 
 	{if $RESULT}
@@ -199,13 +201,16 @@
 			</div>
 		</li>
 		{/section}
+		
+		
 	</ul>
 	{else}
 		<p class="center">{tr}Няма намерени резултати!{/tr}</p>
 	{/if}
+	
+	
 
 	{if $PAGING}<div class="paging">{$PAGING}</div>{/if}
-
 {else}
 	{$CONTENT}
 

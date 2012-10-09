@@ -57,9 +57,15 @@ function main($id, &$title)
 				'name' => $row['title'],
 				'icon' => $row['image']
 			);
+			
 		}
 
 		$skin->assign('SIDEBAR', $sidebar);
+	}
+
+	// new year banners
+	if (isset($uri[0]) && ((int) $uri[0]) === 31) {
+		$skin->assign('NEW_YEAR', true);
 	}
 
 	// get offer
@@ -73,6 +79,7 @@ function main($id, &$title)
 	if ($heading = ShowOffers($id, $category, $article['url'])) {
 		$title .= ' – ' . $heading;
 	}
+
 	$skin->assign('CONTENT', $article['content']);
 }
 
