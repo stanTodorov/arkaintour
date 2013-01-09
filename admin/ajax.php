@@ -40,7 +40,6 @@ function Languages()
 {
 	global $db, $skin, $ml;
 
-
 	$lang = isset($_POST['lang']) ? (int) $_POST['lang'] : 0;
 
 	switch((isset($_POST['which']) ? $_POST['which'] : '')) {
