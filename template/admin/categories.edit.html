@@ -32,6 +32,13 @@
 			</td>
 		</tr>
 		<tr>
+			<th>Опции</th>
+			<td>
+				<label><input type="checkbox" name="visible" value="1" {if NOT isset($RESULT.visible) OR $RESULT.visible}checked="checked"{/if} /> Показване в страничния панел</label>
+				{if $ERRORS.visible}<div class="small-error">{$ERRORS.visible}</div>{/if}
+			</td>
+		</tr>
+		<tr>
 			<th class="top">Икона</th>
 			<td>
 				<div id="icons-list">

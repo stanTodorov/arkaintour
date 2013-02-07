@@ -109,6 +109,11 @@ function AddArticle()
 		'lang' => array(
 			'req' => true,
 			'is' => 'int'
+		),
+		'show_mainmenu' => array(
+			'is' => 'int',
+			'between' => array(0, 1),
+			'default' => 0
 		)
     	));
 

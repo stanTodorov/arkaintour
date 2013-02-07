@@ -557,7 +557,9 @@ function LoadMainMenu()
 	// get menu items
 	$sql = "SELECT
 			a.`title`,
-			a.`url`
+			a.`url`,
+			a.`show_mainmenu`,
+			a.`show_footermenu`
 		FROM
 			`".TABLE_ARTICLES."` a,
 			`".TABLE_LANGUAGES."` l
@@ -602,6 +604,7 @@ function LoadSideBarItems()
 			AND c.`lang_id` = l.`id`
 			AND l.`locale` = '".$db->escapeString(CFG('locale'))."'
 			AND a.`url` <> ''
+			AND c.`visible` = '1'
 		ORDER BY c.`order` ASC, a.`order` ASC";
 	if ($db->query($sql) && $db->getCount()) {
 		while ($row = $db->getAssoc()) {
@@ -621,6 +624,107 @@ function LoadSideBarItems()
 	}
 
 	return $sidebar;
+}
+
+function LoadDirectLinks()
+{
+	global $db;
+
+	$directLinks = array();
+
+	$banners = BASE_URL . 'template/client/images/buttons/';
+
+	// get all subcategories
+	$sql = "SELECT
+			a.`url`,
+			c.`id`,
+			c.`title`
+		FROM (
+			`".TABLE_ARTICLES."` a,
+			`".TABLE_CATEGORIES."` c,
+			`".TABLE_LANGUAGES."` l,
+			`".TABLE_SCRIPTS."` s
+		)
+
+		WHERE
+			a.`id` = c.`article_id`
+			AND s.`id` = a.`script_id`
+			AND s.`has_offers` = '1'
+			AND c.`lang_id` = l.`id`
+			AND l.`locale` = '".$db->escapeString(CFG('locale'))."'
+			AND a.`url` <> ''
+		ORDER BY c.`order` ASC, a.`order` ASC";
+	if ($db->query($sql) && $db->getCount()) {
+		while ($row = $db->getAssoc()) {
+			$row['url'] = BASE_URL . CFG('locale') . '/' . $row['url'] . '/' . $row['id'];
+
+			switch(mb_strtolower(trim($row['title']))) {
+			case 'регулярными рейсами':
+				$directLinks[] = array(
+					'src' => $banners . 'regular.jpg',
+					'title' => $row['title'],
+					'url' => $row['url']
+				);
+				break;
+			case 'чартерными':
+				$directLinks[] = array(
+					'src' => $banners . 'charter.jpg',
+					'title' => $row['title'],
+					'url' => $row['url']
+				);
+				break;
+			}
+
+		}
+	}
+
+	// get all subcategories
+	$sql = "SELECT
+			a.`url`,
+			c.`id`,
+			c.`title`,
+			o.`name`,
+			o.`id` AS 'offer_id'
+		FROM (
+			`".TABLE_OFFERS."` o,
+			`".TABLE_ARTICLES."` a,
+			`".TABLE_CATEGORIES."` c,
+			`".TABLE_LANGUAGES."` l,
+			`".TABLE_SCRIPTS."` s
+		)
+		WHERE
+			a.`id` = c.`article_id`
+			AND s.`id` = a.`script_id`
+			AND s.`has_offers` = '1'
+			AND c.`lang_id` = l.`id`
+			AND l.`locale` = '".$db->escapeString(CFG('locale'))."'
+			AND a.`url` <> ''
+			AND c.`id` = o.`category_id`
+			AND o.`lang_id` = l.`id`
+		GROUP BY o.`id`
+		ORDER BY o.`added` DESC";
+	if ($db->query($sql) && $db->getCount()) {
+		while ($row = $db->getAssoc()) {
+			$row['url'] = BASE_URL . CFG('locale') . '/' . $row['url'];
+			$row['url'] .= '/' . $row['id'] . '/' . $row['offer_id'];
+
+			switch(mb_strtolower(trim($row['name']))) {
+			case 'авиа билеты - акции':
+				$directLinks[] = array(
+					'src' => $banners . 'auto.jpg',
+					'title' => $row['title'],
+					'url' => $row['url']
+				);
+			}
+		}
+	}
+
+	echo mysql_error();
+
+
+
+	return $directLinks;
+
 }
 
 function LoadSuggestionsOffers()
@@ -744,6 +848,7 @@ function LoadPagesData()
 
 	$skin->assign('MENU', LoadMainMenu());
 	$skin->assign('SIDEBAR', LoadSideBarItems());
+	$skin->assign('DIRECT_LINKS', LoadDirectLinks());
 	$skin->assign('SUGGESTIONS', LoadSuggestionsOffers());
 
 }

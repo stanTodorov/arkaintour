@@ -48,8 +48,12 @@
 				<a title="Сортиране по име на категория" href="{$URL}admin?page={$PAGE}&amp;sort=name&amp;order={$ORDER|default:'asc'}&amp;search={$SEARCH|escape}">Категория
 			</th>
 			<th>
+				<a title="Сортиране по видимост" href="{$URL}admin?page={$PAGE}&amp;sort=visible&amp;order={$ORDER|default:'asc'}&amp;search={$SEARCH|escape}">Видима в страничния панел</a>
+			</th>
+			<th>
 				<a title="Сортиране по заглавие на страница" href="{$URL}admin?page={$PAGE}&amp;sort=article&amp;order={$ORDER|default:'asc'}&amp;search={$SEARCH|escape}">Страница</a>
 			</th>
+
 			<th>
 				<a title="Сортиране по дата и час на добавяне" href="{$URL}admin?page={$PAGE}&amp;sort=added&amp;order={$ORDER|default:'asc'}&amp;search={$SEARCH|escape}">Добавено
 			</th>
@@ -59,7 +63,7 @@
 	</thead>
 	<tfoot>
 		<tr>
-			<th colspan="5">Общо: {$COUNT|default:0}</th>
+			<th colspan="6">Общо: {$COUNT|default:0}</th>
 		</tr>
 	</tfoot>
 	<tbody>
@@ -70,6 +74,7 @@
 				{if $RESULT[i].image}<img src="{$RESULT[i].image}" alt="" title="" />{/if}
 				{$RESULT[i].name}
 			</td>
+			<td class="center">{if $RESULT[i].visible}Да{else}<span style="color: red">Не</span>{/if}</td>
 			<td>{$RESULT[i].article}</td>
 			<td class="center">{$RESULT[i].added}</td>
 			<td class="center">
@@ -80,7 +85,7 @@
 		</tr>
 	{sectionelse}
 		<tr>
-			<td colspan="5" class="center">Няма намерени резултати!</td>
+			<td colspan="6" class="center">Няма намерени резултати!</td>
 		</tr>
 	{/section}
 	</tbody>

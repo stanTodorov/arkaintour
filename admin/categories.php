@@ -117,7 +117,8 @@ function AddCategory()
 		'page' => array('req' => true, 'is' => 'int'),
 		'lang' => array('req' => true, 'is' => 'int'),
 		'icon' => array('req' => true, 'is' => 'int'),
-		'name' => array('req' => true, 'min' => 1, 'max' => 256)
+		'name' => array('req' => true, 'min' => 1, 'max' => 256),
+		'visible' => array('between' => array(0, 1), 'default' => '0', 'is' => 'int')
 	));
 
 	if (count($errors) > 0) {
@@ -148,6 +149,7 @@ function AddCategory()
 			`article_id`,
 			`icon_id`,
 			`title`,
+			`visible`,
 			`order`,
 			`added`,
 			`added_by`,
@@ -159,6 +161,7 @@ function AddCategory()
 			'".$data['page']."',
 			'".$data['icon']."',
 			'".$db->escapeString($data['name'])."',
+			'".$data['visible']."',
 			'".$order."',
 			NOW(),
 			'".$user['id']."',
@@ -230,7 +233,8 @@ function EditCategory()
 			`article_id` AS 'page',
 			`title` AS 'name',
 			`lang_id` AS 'lang',
-			`order`
+			`order`,
+			`visible`
 		FROM
 			`".TABLE_CATEGORIES."`
 		WHERE `id` = '".$id."'
@@ -284,7 +288,8 @@ function EditCategory()
 		'page' => array('req' => true, 'is' => 'int'),
 		'icon' => array('req' => true, 'is' => 'int'),
 		'name' => array('req' => true, 'min' => 1, 'max' => 256),
-		'lang' => array('req' => true, 'is' => 'int')
+		'lang' => array('req' => true, 'is' => 'int'),
+		'visible' => array('between' => array(0, 1), 'default' => '0', 'is' => 'int')
 	));
 
 	if (count($errors) > 0) {
@@ -323,6 +328,7 @@ function EditCategory()
 			`article_id` = '".$data['page']."',
 			`title` = '".$db->escapeString($data['name'])."',
 			`order` = '".$order."',
+			`visible` = '".$data['visible']."',
 			`modified` = NOW(),
 			`modified_by` = '".$user['id']."'
 		WHERE `id` = '".$id."'";
@@ -597,6 +603,7 @@ function ListCategories()
 		'name' => array('field' => 'c.`title`', 'name' => 'Име'),
 		'article' => array('field' => 'a.`title`', 'name' => 'Страница'),
 		'added' => array('field' => 'c.`added`', 'name' => 'Добавено'),
+		'visible' => array('field' => 'c.`visible`', 'name' => 'Видимост')
 	));
 
 	if ($order == '') {
@@ -631,6 +638,7 @@ function ListCategories()
 	$sql = "SELECT
 			c.`id`,
 			c.`title` AS 'name',
+			c.`visible`,
 			a.`title` AS 'article',
 			UNIX_TIMESTAMP(c.`added`) AS 'added',
 			UNIX_TIMESTAMP(c.`modified`) AS 'modified',

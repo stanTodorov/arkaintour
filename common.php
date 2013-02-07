@@ -75,6 +75,8 @@ if ($db->query("SELECT `name`, `value`, `type` FROM `".TABLE_SETTINGS."`")) {
 	unset($row);
 }
 
+$cfg['debug'] = true;
+
 // Load all configurations
 CFG($cfg);
 unset($cfg);

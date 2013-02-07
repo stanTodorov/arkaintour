@@ -41,7 +41,9 @@
 
 					<ul id="menu">
 					{section name=i loop=$MENU}
-						<li><a href="{$URL}{$LOCALE}/{$MENU[i].url}">{$MENU[i].title|escape}</a></li>
+						{if $MENU[i].show_mainmenu}
+							<li><a href="{$URL}{$LOCALE}/{$MENU[i].url}">{$MENU[i].title|escape}</a></li>
+						{/if}
 					{/section}
 					</ul>
 
@@ -88,6 +90,16 @@
 						</li>
 					</ul>
 				</div>
+
+				{if $DIRECT_LINKS}
+				<div id="directlinks">
+				{section name=i loop=$DIRECT_LINKS}
+					<a href="{$DIRECT_LINKS[i].url}" {if $smarty.section.i.last}class="last"{/if}>
+						<img src="{$DIRECT_LINKS[i].src}" alt="{$DIRECT_LINKS[i].title}" title="" />
+					</a>
+				{/section}
+				</div>
+				{/if}
 
 				<div id="content">
 					<div class="top"></div>
@@ -189,7 +201,9 @@
 
 			<ul class="menu">
 				{section name=i loop=$MENU}
+					{if $MENU[i].show_footermenu}
 					<li><a href="{$MENU[i].url}">{$MENU[i].title|escape}</a></li>
+					{/if}
 				{/section}
 				<li><a href="{$URL}{tr}карта-на-сайта{/tr}">{tr}Карта на сайта{/tr}</a></li>
 			</ul>

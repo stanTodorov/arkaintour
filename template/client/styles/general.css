@@ -98,11 +98,14 @@ ul li {
 #footer .menu {
 	float: left;
 	list-style: none inside;
+	margin: 0;
+	padding: 0;
 }
 
 #footer .menu li {
 	float: left;
 	display: inline;
+	margin: 0;
 }
 
 #footer .menu li a {
@@ -942,7 +945,7 @@ div.paging span {
 	padding-right: 20px;
 	padding-bottom: 3px;
 	color: #fff;
-	
+
 	line-height: 54px;
 	text-indent: 20px;
 }
@@ -960,10 +963,36 @@ div.paging span {
 	position: absolute;
 	bottom: -3px;
 	right: -3px;
-	
+
 	width: 110px;
 	height: 172px;
-	
+
 	background: url('./../images/borche.png') center no-repeat;
-	
+}
+
+#directlinks {
+	width: 930px;
+	margin: -6px auto 8px;
+	height: 152px;
+	overflow: hidden;
+}
+
+#directlinks a {
+	margin: 0 29px 2px 0;
+	float: left;
+	display: block;
+	width: 290px;
+	height: 150px;
+	opacity: 0.9;
+	background: green;
+}
+
+#directlinks a.last { margin: 0}
+
+#directlinks a:hover {
+	opacity: 1;
+}
+#directlinks a:active {
+	margin-top: 2px;
+	margin-bottom: 0;
 }

@@ -40,7 +40,9 @@ function main($id, &$title)
 		FROM `".TABLE_CATEGORIES."` c
 		LEFT JOIN `".TABLE_ICONS."` i ON
 			i.`id` = c.`icon_id`
-		WHERE c.`article_id` = '".$id."'
+		WHERE 
+			c.`article_id` = '".$id."' 
+			AND c.`visible` = '1'
 		ORDER BY c.`order` ASC";
 	if ($db->query($sql) && $db->getCount()) {
 		$sidebar = array();
@@ -57,7 +59,7 @@ function main($id, &$title)
 				'name' => $row['title'],
 				'icon' => $row['image']
 			);
-			
+
 		}
 
 		$skin->assign('SIDEBAR', $sidebar);
