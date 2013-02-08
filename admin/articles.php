@@ -114,6 +114,11 @@ function AddArticle()
 			'is' => 'int',
 			'between' => array(0, 1),
 			'default' => 0
+		),
+		'show_footermenu' => array(
+			'is' => 'int',
+			'between' => array(0, 1),
+			'default' => 0
 		)
     	));
 
@@ -146,7 +151,8 @@ function AddArticle()
 	$sql = "INSERT INTO `".TABLE_ARTICLES."` (
 			`id`, `lang_id`, `title`,
 			`content`, `url`, `keywords`,
-			`default`, `script_id`, `show_title`,
+			`default`, `script_id`,
+			`show_title`, `show_mainmenu`, `show_footermenu`,
 			`order`, `added`, `added_by`,
 			`modified`, `modified_by`
 		) VALUES (
@@ -159,6 +165,8 @@ function AddArticle()
 			'0',
 			'".$data['script']."',
 			'".$data['show_title']."',
+			'".$data['show_mainmenu']."',
+			'".$data['show_footermenu']."',
 			'".$order."',
 			NOW(),
 			'".$user['id']."',
@@ -214,6 +222,8 @@ function EditArticle()
 			`lang_id` AS 'lang',
 			`script_id` AS 'script',
 			`show_title`,
+			`show_mainmenu`,
+			`show_footermenu`,
 			`order`
 		FROM `".TABLE_ARTICLES."`
 		WHERE `id` = '".$id."'";
@@ -273,6 +283,16 @@ function EditArticle()
 		'lang' => array(
 			'req' => true,
 			'is' => 'int'
+		),
+		'show_mainmenu' => array(
+			'is' => 'int',
+			'between' => array(0, 1),
+			'default' => 0
+		),
+		'show_footermenu' => array(
+			'is' => 'int',
+			'between' => array(0, 1),
+			'default' => 0
 		)
     	));
 
@@ -317,6 +337,8 @@ function EditArticle()
 			`keywords` = '".$db->escapeString($data['keywords'])."',
 			`script_id` = '".$data['script']."',
 			`show_title` = '".$data['show_title']."',
+			`show_mainmenu` = '".$data['show_mainmenu']."',
+			`show_footermenu` = '".$data['show_footermenu']."',
 			`order` = '".$order."',
 			`modified` = NOW(),
 			`modified_by` = '".$user['id']."'

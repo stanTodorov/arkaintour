@@ -829,6 +829,9 @@ function LoadSuggestionsOffers()
 
 		$url = $articles[$row['a_id']]['url'];
 		$row['url'] = BASE_URL . CFG('locale') . '/' . $url . '/' . $row['cat_id'] . '/' . $row['id'];
+
+		$row['content'] = str_replace("&nbsp;", ' ', $row['content']);
+		$row['content'] = trim(strip_tags(html_entity_decode($row['content'])));
 		$row['content'] = ShortText($row['content'], CFG('short.text'), true, true);
 
 		$articles[$row['a_id']]['offers'][] = $row;

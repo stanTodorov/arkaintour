@@ -75,7 +75,7 @@ function GetTopOffers()
 			a.`url`,
 			o.`id`,
 			o.`name`,
-			SUBSTR(o.`content`, 1, 255) AS 'content',
+			SUBSTR(o.`content`, 1, 320) AS 'content',
 			o.`price`,
 			p.`filename`
 		FROM (
@@ -107,6 +107,9 @@ function GetTopOffers()
 			$row['image'] = $resizes['small']['url'] . $row['filename'];
 		}
 		$row['url'] = BASE_URL . CFG('locale') . '/' . $row['url'] . '/' . $row['category'] . '/' . $row['id'];
+
+		$row['content'] = str_replace("&nbsp;", ' ', $row['content']);
+		$row['content'] = trim(strip_tags(html_entity_decode($row['content'])));
 		$row['content'] = ShortText($row['content'], CFG('short.text'), true, true);
 
 		$result[] = $row;

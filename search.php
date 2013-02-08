@@ -111,7 +111,7 @@ function main(&$title)
 	$sql = "SELECT
 			o.`id`,
 			o.`name`,
-			SUBSTR(o.`content`, 1, 255) AS 'content',
+			SUBSTR(o.`content`, 1, 320) AS 'content',
 			o.`vip_offer` AS 'vip_offer',
 			p.`filename`,
 			a.`url` AS 'article',
@@ -156,6 +156,8 @@ function main(&$title)
 			if ($row['filename']) {
 				$row['image'] = $resizes['small']['url'] . $row['filename'];
 			}
+			$row['content'] = str_replace("&nbsp;", ' ', $row['content']);
+			$row['content'] = trim(strip_tags(html_entity_decode($row['content'])));
 			$row['content'] = ShortText($row['content'], CFG('short.text'), true, true);
 			$row['url'] = BASE_URL . CFG('locale') . '/' . $row['article'] . '/' . $row['category'] . '/' . $row['id'];
 			$offers[] = $row;

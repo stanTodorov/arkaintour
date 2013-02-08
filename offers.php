@@ -40,8 +40,8 @@ function main($id, &$title)
 		FROM `".TABLE_CATEGORIES."` c
 		LEFT JOIN `".TABLE_ICONS."` i ON
 			i.`id` = c.`icon_id`
-		WHERE 
-			c.`article_id` = '".$id."' 
+		WHERE
+			c.`article_id` = '".$id."'
 			AND c.`visible` = '1'
 		ORDER BY c.`order` ASC";
 	if ($db->query($sql) && $db->getCount()) {
@@ -133,7 +133,7 @@ function ShowOffers($articleId, $category = 0, $url = '')
 				a.`url`,
 				o.`id`,
 				o.`name`,
-				SUBSTR(o.`content`, 1, 255) AS 'content',
+				SUBSTR(o.`content`, 1, 320) AS 'content',
 				o.`price`,
 				p.`filename`
 			FROM (
@@ -161,7 +161,11 @@ function ShowOffers($articleId, $category = 0, $url = '')
 			if ($row['filename']) {
 				$row['image'] = $resizes['small']['url'] . $row['filename'];
 			}
+
+			$row['content'] = str_replace("&nbsp;", ' ', $row['content']);
+			$row['content'] = trim(strip_tags(html_entity_decode($row['content'])));
 			$row['content'] = ShortText($row['content'], CFG('short.text'), true, true);
+
 			$row['url'] = BASE_URL . CFG('locale') . '/' . $row['url'] . '/' . $row['category'] . '/' . $row['id'];
 			$result[] = $row;
 		}
@@ -206,7 +210,7 @@ function ShowOffers($articleId, $category = 0, $url = '')
 			c.`title`,
 			o.`id`,
 			o.`name`,
-			SUBSTR(o.`content`, 1, 255) AS 'content',
+			SUBSTR(o.`content`, 1, 320) AS 'content',
 			o.`price`,
 			p.`filename`
 		FROM (
@@ -240,6 +244,9 @@ function ShowOffers($articleId, $category = 0, $url = '')
 		if ($row['filename']) {
 			$row['image'] = $resizes['small']['url'] . $row['filename'];
 		}
+
+		$row['content'] = str_replace("&nbsp;", ' ', $row['content']);
+		$row['content'] = trim(strip_tags(html_entity_decode($row['content'])));
 		$row['content'] = ShortText($row['content'], CFG('short.text'), true, true);
 
 		$row['url'] = BASE_URL . CFG('locale') . '/' . $row['url'] . '/' . $row['category'] . '/' . $row['id'];
