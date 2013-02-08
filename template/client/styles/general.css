@@ -996,3 +996,5 @@ div.paging span {
 	margin-top: 2px;
 	margin-bottom: 0;
 }
+
+#footerAddress { display: none }

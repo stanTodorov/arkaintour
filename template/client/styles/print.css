@@ -11,7 +11,7 @@ body {
 #slideshow, #header, #content .top, #content .bottom,
 #sidebar, #suggestions, #footer .menu, #back, #nastech,
 #offer .facebook, #offer .options, #offer .summary .gallery,
-#query, #send-to-friend, #offer .attachments { display: none }
+#query, #send-to-friend, #offer .attachments, #directlinks, #banner { display: none }
 
 h1, h2, h3, h4, h5, h6, #main h2 { font-family: "Georgia","Times New Roman", serif }
 
@@ -30,3 +30,5 @@ h1, h2, h3, h4, h5, h6, #main h2 { font-family: "Georgia","Times New Roman", ser
 #content .content { padding: 0 }
 #footer { width: auto }
 #footer .copyrights { padding: 2px 10px }
+
+#footerAddress { display: inline } 
